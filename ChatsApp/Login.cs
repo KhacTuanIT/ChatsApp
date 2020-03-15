@@ -26,6 +26,10 @@ namespace ChatsApp
 
         private Queue mqRequestQueue = null;
 
+        public Login()
+        {
+
+        }
         public Login(frmLogin _frmLogin,string user)
         {
             InitializeComponent();
@@ -38,10 +42,10 @@ namespace ChatsApp
 
         public void getConfig()
         {
-            //this.hostAddress = ConfigurationManager.AppSettings["hostAddress"].ToString();
-            //this.iPort = int.Parse(ConfigurationManager.AppSettings["iPort"].ToString());
-            this.hostAddress = "127.0.0.1";
-            this.iPort = 9002;
+            this.hostAddress = ConfigurationManager.AppSettings["hostAddress"];
+            this.iPort = Int32.Parse(ConfigurationManager.AppSettings["iPort"]);
+            //this.hostAddress = "127.0.0.1";
+            //this.iPort = 9002;
         }
 
         public void connect(string hostAddress, int iPort)

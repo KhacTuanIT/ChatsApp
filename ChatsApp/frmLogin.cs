@@ -77,5 +77,13 @@ namespace ChatsApp
                 }
             }
         }
+
+        private void configurationSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using(frmConfigSettings config = new frmConfigSettings())
+            {
+                config.ShowDialog();
+            }
+        }
     }
 }

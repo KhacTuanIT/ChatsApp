@@ -28,16 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.login1 = new ChatsApp.Login(null, "");
+            this.cmsConfig = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.configurationSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.panel2.SuspendLayout();
+            this.cmsConfig.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -75,15 +77,22 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.login1);
             resources.ApplyResources(this.panel2, "panel2");
             this.panel2.Name = "panel2";
             // 
-            // login1
+            // cmsConfig
             // 
-            this.login1.BackColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.login1, "login1");
-            this.login1.Name = "login1";
+            this.cmsConfig.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsConfig.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.configurationSettingsToolStripMenuItem});
+            this.cmsConfig.Name = "cmsConfig";
+            resources.ApplyResources(this.cmsConfig, "cmsConfig");
+            // 
+            // configurationSettingsToolStripMenuItem
+            // 
+            this.configurationSettingsToolStripMenuItem.Name = "configurationSettingsToolStripMenuItem";
+            resources.ApplyResources(this.configurationSettingsToolStripMenuItem, "configurationSettingsToolStripMenuItem");
+            this.configurationSettingsToolStripMenuItem.Click += new System.EventHandler(this.configurationSettingsToolStripMenuItem_Click);
             // 
             // frmLogin
             // 
@@ -98,7 +107,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.panel2.ResumeLayout(false);
+            this.cmsConfig.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -111,5 +120,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private Login login1;
+        private System.Windows.Forms.ContextMenuStrip cmsConfig;
+        private System.Windows.Forms.ToolStripMenuItem configurationSettingsToolStripMenuItem;
     }
 }
