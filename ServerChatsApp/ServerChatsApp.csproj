@@ -90,6 +90,10 @@
     <Compile Include="Migrations\202003100739444_v6_chatsapp.Designer.cs">
       <DependentUpon>202003100739444_v6_chatsapp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003171621126_v7_chatsapp.cs" />
+    <Compile Include="Migrations\202003171621126_v7_chatsapp.Designer.cs">
+      <DependentUpon>202003171621126_v7_chatsapp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Chat.cs" />
     <Compile Include="Model\ChatDbContext.cs" />
@@ -120,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003100739444_v6_chatsapp.resx">
       <DependentUpon>202003100739444_v6_chatsapp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003171621126_v7_chatsapp.resx">
+      <DependentUpon>202003171621126_v7_chatsapp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -23,12 +23,12 @@ namespace ChatsApp
         private Login _login = null;
         private string user = "";
         private frmLogin _frmLogin = null;
-
+        private bool isConnect = false;
         private Queue mqRequestQueue = null;
 
         public Login()
         {
-
+            InitializeComponent();
         }
         public Login(frmLogin _frmLogin,string user)
         {
@@ -36,7 +36,6 @@ namespace ChatsApp
             this._frmLogin = _frmLogin;
             _login = this;
             this.user = user;
-            getConfig();
             this.mqRequestQueue = new Queue();
         }
 
@@ -187,6 +186,8 @@ namespace ChatsApp
                             }
                             else if (chatData.Payload.StatusCode == StatusCode.CheckTrue)
                             {
+                                chatData.Header.Header = Header.Quit;
+                                this.chatClient.sendDataObject(chatData);
                                 invokehideForm(_frmLogin);
                                 frmMain main = new frmMain(chatData.Payload.Username, chatData.Payload.Fullname);
                                 main.Show();
@@ -228,6 +229,14 @@ namespace ChatsApp
             lblWarning.Text = "";
             if (e.KeyCode == Keys.Enter)
             {
+                if (!isConnect)
+                {
+                    getConfig();
+                    connect(hostAddress, iPort);
+                    Thread.Sleep(200);
+                    isConnect = true;
+                }
+
                 btnLogin_Click(sender, e);
             }
         }
@@ -244,7 +253,7 @@ namespace ChatsApp
 
         private void Login_Load(object sender, EventArgs e)
         {
-            connect(hostAddress, iPort);
+            //connect(hostAddress, iPort);
         }
     }
 

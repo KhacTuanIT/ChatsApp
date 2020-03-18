@@ -26,10 +26,10 @@ namespace ChatsApp
             context = new ServerChatsApp.Model.ChatDbContext();
             generateId();
             login = new Login(_frmLogin, user);
-            login1.Visible = false;
-            login.Anchor = login1.Anchor;
-            login.Location = login1.Location;
-            login.Size = login1.Size;
+            login1.Visible = true;
+            login.Anchor = login2.Anchor;
+            login.Location = login2.Location;
+            login.Size = login2.Size;
             login.Visible = true;
             panel2.Controls.Clear();
             panel2.Controls.Add(login);
@@ -45,7 +45,11 @@ namespace ChatsApp
         {
             dragging = true;
             dragCursorPoint = Cursor.Position;
-            dragFormPoint = this.Location;
+            dragFormPoint = this.Location; 
+            if (e.Button == MouseButtons.Right)
+            {
+                cmsConfig.Show(Cursor.Position);
+            }
         }
 
         private void panel1_MouseMove(object sender, MouseEventArgs e)

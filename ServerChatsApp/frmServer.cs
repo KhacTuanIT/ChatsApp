@@ -26,7 +26,7 @@ namespace ServerChatsApp
         private Queue mqRequestQueue = null;
         private ChatDbContext context = null;
         private bool statusRun = false;
-
+        private bool isQuit = false;
         public frmServer()
         {
             InitializeComponent();
@@ -203,14 +203,14 @@ namespace ServerChatsApp
                             {
                                 status = false;
                                 chatData.Payload.StatusCode = StatusCode.MissUsername;
-                                data = DateTime.Now + ":Session from " + chatData.Header.SessionFrom + " register failure. Miss username error!";
+                                data = DateTime.Now + ":Session from " + chatData.Header.SessionFrom + " login failure. Miss username error!";
                             }
                             else
                             {
                                 if (!checkPassword(username, password))
                                 {
                                     chatData.Payload.StatusCode = StatusCode.PasswordWrong;
-                                    data = DateTime.Now + ":Session from " + chatData.Header.SessionFrom + " register failure. Password wrong error!";
+                                    data = DateTime.Now + ":Session from " + chatData.Header.SessionFrom + " login failure. Password wrong error!";
                                 }
                                 else
                                 {
@@ -218,16 +218,36 @@ namespace ServerChatsApp
                                     chatData.Payload.Password = null;
                                     chatData.Payload.Fullname = user.Fullname;
                                     chatData.Payload.StatusCode = StatusCode.CheckTrue;
+                                    data = DateTime.Now + ":Session from " + chatData.Header.SessionFrom + " username: " + chatData.Payload.Username + " login successfully!";
                                 }
                             }
                         }
-                        else if ("".Equals(chatData.Header.Header.ToString()))
+                        else if (chatData.Header.Header == Header.Quit)
                         {
-
+                            channel = (SocketChannel)this.mhSessionTable[chatData.Header.SessionFrom];
+                            chatData.Payload.StatusCode = StatusCode.CheckTrue;
+                            data = DateTime.Now + ":Session from " + chatData.Header.SessionFrom + " quit!";
+                            isQuit = true;
+                        }
+                        else if (chatData.Header.Header == Header.Refresh)
+                        {
+                            channel = (SocketChannel)this.mhSessionTable[chatData.Header.SessionFrom];
+                            string allUser = getAllUser();
+                            chatData.Payload.Data = allUser;
+                            data = DateTime.Now + ":Session from " + chatData.Header.SessionFrom + " get all user!";
                         }
 
-                        channel.sendData(chatData);
-                        channel.logMonitor(data);
+                        if (isQuit)
+                        {
+                            this.mhSessionTable.Remove(chatData.Header.SessionFrom);
+                            isQuit = false;
+                            channel.stopChannel();
+                        }
+                        else
+                        {
+                            channel.sendData(chatData);
+                            channel.logMonitor(data);
+                        }
                         if (status == false)
                         {
                             if (username != "")
@@ -244,6 +264,18 @@ namespace ServerChatsApp
                 }
                 System.Threading.Thread.Sleep(300);
             }
+        }
+
+        private string getAllUser()
+        {
+            Dictionary<string, string> dictUsers = new Dictionary<string, string>();
+            var users = context.Users;
+            foreach (var user in users)
+            {
+                dictUsers.Add(user.Fullname, user.Username);
+            }
+            string allUser = string.Join(";", dictUsers.Select(x => x.Key + "=" + x.Value).ToArray());
+            return allUser;
         }
 
         /// <summary>
@@ -376,7 +408,7 @@ namespace ServerChatsApp
         public override void eventRecvData(object o)
         {
             ChatDataObject chatDataObject = (ChatDataObject)o;
-            String data = DateTime.Now + ":Session from " + chatDataObject.Header.SessionFrom + " to " + chatDataObject.Header.SessionTo;
+            String data = DateTime.Now + ":Session from " + chatDataObject.Header.SessionFrom + " with header: " + chatDataObject.Header.Header;
 
             invokeTextBox(this.textBox, data + "\r\n");
             this.mqRequestQueue.Enqueue(o);

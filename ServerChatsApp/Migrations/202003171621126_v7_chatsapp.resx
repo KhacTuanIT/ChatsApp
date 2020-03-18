@@ -117,56 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="icons8-attach-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-attach-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Target" xml:space="preserve">
+    <value>H4sIAAAAAAAEAO1c207kNhi+r9R3iHLVViwB9qZFM7uiA1Soy0EMu+odMolniOo4aezQGVV9sl70kfoKtXP2KadhsgNCewM+fLZ/f79///HH/vfPv5OPqwBZTzAmfoin9uH+gW1B7Iaej5dTO6GLdz/aHz98+83kzAtW1pei3XvejvXEZGo/UhodOw5xH2EAyH7gu3FIwgXdd8PAAV7oHB0c/OQcHjqQQdgMy7ImtwmmfgDTX9ivsxC7MKIJQJehBxHJy1nNPEW1rkAASQRcOLXnMGbTnT0CSk6iaD/tYFsnyAeEV6KFbQGMQwoom+nxZwLnNA7xch6xAoDu1hFk7RYAEZiv4Lhq3nUxB0d8MU7VsYByE0LDoCfg4fvcOo7cfZCN7dJ6zH5nzM50zVed2nBqc8PFYRjYljzY8QzFvKHexPtFxz1LrN4rWcHIw//tWbME0SSGUwwTGgO0Z90kD8h3f4Xru/B3iKc4Qag+SzZPVicUsKKbOIxgTNe3cJHP/cKzLUfs58gdy261PtmqLjB9f2RbV2xw8IBgSYKaBeY0jOEvEMMYUOjdAEphjDkGTM2ojC6NxU3Cx2ofsxnnlpmZ/1SgMAYzd7StS7D6BPGSPk5t9qNtnfsr6BUlOfJn7DPvZZ1onLQOdOdXg5yyJWe/t832Cjz5y9RgmvUT27qFKK0lj36UuWRKnvuKeudxGNyGKO9SVtzfgXgJKZtRqKudh0ns9pwOX5txRryyhCfytMRa7dykJroJTpzKBVsdc5BTvjlko0NyZ9rUIVkUiTfFmLMlJaQnRiO3M18a7m0FXfXeVvB9MJkz1xtAaF79RmrjWHyc7USHVraZD/deR6mOeIbTdhD7LiEhYNmffHm/N+4Zx+Im2fQgzK38HBelO5+i7d+SWHZCmXl29DZmcNWRT4japmrPiFr9ff6zcEro6pUrl7bRRpcuYdrDTou3aNUarcbnoT5QDSKhHKwamTqIhPx22Zt9vNMb7YxjnTNoPEYKzfdhlIHOAuCjrY9yAwj5M4y9XQx2Joc6ISR0/ZQ2tSBYJUDiPM6wZzVmQ7nP5RdbtnTmQn7EnIYNPbV/UBZmAiyjlwiY5WQi6KEte9w1PoUIUmiduNl3xBkgLvBUszKbeGIJc1IYcy8BiN1cCHN7H1PVo33s+hFATVOXOnU8CPikSni55hRGEHMfbtqDLuPWU3t1/HIYyVhttpk4NTK1c0zKepp4YUqBRHJk0XKL5GicVA/Gqm4wmHZ6y4zEPb0FuhKwyGG+CgG1txnTbjdfbar9Fi7Eo/Cw+eavzGxLRGyyzwhUbDJCl+GlnHoEPmahmKfGrAeMa05x+pAmzCvd12x2W8qvtSS/Jsi04KhzSNUPT1XsV44mJSCrICaATp3T+RoAMk9pAamSDQWjpHU3CNNUBL9tgeJXVh1GlodInWvbLxql9oG51kb7BVpmY9sVrJxwuXcKodsuXRJEziH5WBIX13Hh8qdO/eqbrgZdLwfSIvK9b7GFIaZvySD6lFo1SXuw6h6uaksRvaLBMo1RRgXsY5oiLSnPwkq94GTyhULm4Bh0DpNLEEUszarpHvISa56JHmbv5v21AEGG4bhEIwkoZ1uOxBJutnKpln/99OC5HxPKsjTwAHhSNvMCtZlw8hsOoGIs+XBX9604mooexaNHizhBEyxzhHO2uIAH3PTDgsYb1K4Wl58ABGLNd4xZiJIAm2O/uXf93lhHabpPmtEqqUAdqyrtjpQl4HWUrERFmDiSTZXbhrJ/ynVQJERnujwTVQbSZEyKFLmtTBFTzmtGKx6v60hFWXeU4vm6jlKU7RRFsljwLDRJb1PDqKLvuh26VA/CgveWpTuzPQ2Bv+fuFLfm/ptj7Lk9V9a5cT8UKb2rg7Vkfg2syd5OxQM/LeqxuuJlVFheUbiN2NNk51gbC8WaXfOFZzqt6unfYJ8Y+8xSz6sd2p8sSd54Y9Kcuv+O6LttZyuqp7I6RlXa76ahIlWl3ZHyx646TF7UHaN6yqrDVKUv7mqsJJpyk3L0MuGUEstJnuS1q+yVrC9rYlvMNE++xzO++ZpQGOzzBvvzP9AM+empXzS4BNhfQEKzd2b76ODwSJLp745k3iHEQ5okWVI0al4TR3gs97lVW5/DB8iERAVWOozywfYCe3A1tf9Kux1bF7/dVz33rOuYbfSxdWD9vbHGHT+B2H0E8XcBWH1fR+v7mOwxA9Hhj8l6Xfbr2XRRDt1n07OeG226qKNOB99IRd2O0F+x/Dq2usr+ertXb5nt67CYKG0dwk2tsLWrhwmdN3IyQRS70bEqCV/HPqL1eySLW7fI7Fd2HmzTYmrC8mJNJUsHN6K9LA/cCEyQAG6EJMv8duX2tYmUL3uLHlttJ85hgHxwsG7K8N61FZnUq5XkfW0FXmfSPrPgbizidCbpi5XT7YZ87utI5UaUxr0sGZyimTB8c5Y/LjWp3LIvcCzEPoRst7PQapby6IYwauBM0N1gM7Y3qONM8FrZjkn51qSd0w1gVPI0KOvahHUN43RbSyaxMyjvdOi5Vm90UV6djaJMpk1/pvTabdmdVmXXusjO5tlJSZ1JQtdFQafrux2xnPpWwc7p2v8bxCIF8ZcVBP9fhDB0hRO6bHOBF2ERL6QZFU2UrzkUsGwGnMTUXwCXsmqXLTf9a6gvACVpPvYAvQt8ndAooWzJMHhAwl+m8YDTNH6qCBTnPLmO0r9afI4lsGn6PCG7xj8nPvLKeZ9rEjIDBI9keW7N95LyHHu5LpGuQtwRKDdfGYDvYBAhBkau8Rw8wSFzY2fjJ7gE7rp4cjKDtG+EaPbJqQ+WMQhIjlH1Z78yDnvB6sP/RCkxEz5LAAA=</value>
   </data>
-  <data name="icons8-send-letter-96" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-send-letter-96.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icons8_normal_screen_50px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8_normal_screen_50px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icons8-weixin-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-weixin-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icons8-menu-horizontal-80" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-menu-horizontal-80.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ic_question_answer_black_36dp" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ic_question_answer_black_36dp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icons8-mms-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-mms-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ic_clear_black_36dp" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ic_clear_black_36dp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icons8-telegram-app-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-telegram-app-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icons8-download-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-download-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icons8-chat-room-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-chat-room-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ic_search_black_36dp" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ic_search_black_36dp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ic_question_answer_black_36dp1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ic_question_answer_black_36dp1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icons8-communication-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-communication-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icons8_minimize_window_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8_minimize_window_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icons8_fit_to_width_26px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8_fit_to_width_26px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icons8_settings_100px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8_settings_100px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="DefaultSchema" xml:space="preserve">
+    <value>dbo</value>
   </data>
 </root>

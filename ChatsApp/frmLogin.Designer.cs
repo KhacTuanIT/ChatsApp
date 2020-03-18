@@ -37,8 +37,11 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.cmsConfig = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.configurationSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.login2 = new ChatsApp.Login();
+            this.login1 = new ChatsApp.Login();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel2.SuspendLayout();
             this.cmsConfig.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,6 +80,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.login2);
             resources.ApplyResources(this.panel2, "panel2");
             this.panel2.Name = "panel2";
             // 
@@ -90,9 +94,22 @@
             // 
             // configurationSettingsToolStripMenuItem
             // 
-            this.configurationSettingsToolStripMenuItem.Name = "configurationSettingsToolStripMenuItem";
+            this.configurationSettingsToolStripMenuItem.Image = global::ChatsApp.Properties.Resources.icons8_settings_100px;
             resources.ApplyResources(this.configurationSettingsToolStripMenuItem, "configurationSettingsToolStripMenuItem");
+            this.configurationSettingsToolStripMenuItem.Name = "configurationSettingsToolStripMenuItem";
             this.configurationSettingsToolStripMenuItem.Click += new System.EventHandler(this.configurationSettingsToolStripMenuItem_Click);
+            // 
+            // login2
+            // 
+            this.login2.BackColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.login2, "login2");
+            this.login2.Name = "login2";
+            // 
+            // login1
+            // 
+            this.login1.BackColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.login1, "login1");
+            this.login1.Name = "login1";
             // 
             // frmLogin
             // 
@@ -107,6 +124,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel2.ResumeLayout(false);
             this.cmsConfig.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -122,5 +140,6 @@
         private Login login1;
         private System.Windows.Forms.ContextMenuStrip cmsConfig;
         private System.Windows.Forms.ToolStripMenuItem configurationSettingsToolStripMenuItem;
+        private Login login2;
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -27,15 +28,37 @@ namespace ChatsApp
         private string username = "";
         private string fullname = "";
 
+        private string hostAddress = "";
+        private int iPort = 0;
+
+        private int dock = 0;
+
+        public delegate void AddButton(string fullname);
+        public AddButton myDelegate;
+
+        public delegate void RefreshPanelAside();
+        public RefreshPanelAside reFreshPanel;
+
+        public frmMain _main;
+
         public frmMain(string username, string fullname)
         {
             InitializeComponent();
+            _main = this; 
             panelAside.VerticalScroll.Value = panelAside.VerticalScroll.Maximum;
             this.SetStyle(ControlStyles.ResizeRedraw, true);
             //chatbox1.Visible = false;
             this.username = username;
             this.fullname = fullname;
             this.lblNameUser.Text = fullname;
+            myDelegate = new AddButton(AddButtonMethod);
+            reFreshPanel = new RefreshPanelAside(RefreshPanelAsideMethod);
+        }
+
+        public void getConfig()
+        {
+            this.hostAddress = ConfigurationManager.AppSettings["hostAddress"];
+            this.iPort = Int32.Parse(ConfigurationManager.AppSettings["iPort"]);
         }
 
         public void connect(string hostAddress, int iPort)
@@ -55,12 +78,57 @@ namespace ChatsApp
 
                     thread.IsBackground = true;
                     thread.Start();
+
+                    threadStart = new ThreadStart(sendRefresh);
+                    thread = new Thread(threadStart);
+
+                    thread.IsBackground = true;
+                    thread.Start();
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                Console.WriteLine(e.Message);
             }
+        }
+
+        private void sendRefresh()
+        {
+            while (this.chatClient != null)
+            {
+                try
+                {
+                    ChatHeaderObject header = new ChatHeaderObject()
+                    {
+                        Header = Header.Refresh,
+                        SessionFrom = this.username
+                    };
+                    ChatPayloadObject payload = new ChatPayloadObject()
+                    {
+
+                    };
+                    ChatDataObject chatData = new ChatDataObject()
+                    {
+                        Header = header,
+                        Payload = payload
+                    };
+                    this.chatClient.sendDataObject(chatData);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                System.Threading.Thread.Sleep(5000);
+            }
+        }
+
+        private Dictionary<string, string> getAllUser(string allUser)
+        {
+            Dictionary<string, string> dictAllUser = new Dictionary<string, string>();
+            dictAllUser = allUser.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+               .Select(part => part.Split('='))
+               .ToDictionary(split => split[0], split => split[1]);
+            return dictAllUser;
         }
 
         private void runRecvData()
@@ -73,29 +141,69 @@ namespace ChatsApp
                     if (o != null)
                     {
                         ChatDataObject chatData = (ChatDataObject)o;
-                        String data = DateTime.Now + "-" + chatData.Header.SessionFrom + ":" + chatData.Payload.Data;
-
+                        if (chatData.Header.Header == Header.Refresh)
+                        {
+                            string allUser = chatData.Payload.Data;
+                            Dictionary<string, string> dictUsers = getAllUser(allUser);
+                            invokeButton(_main, dictUsers);
+                        }
                         //invokeTextBox(this.)
                     }
                 }
                 catch (Exception e)
                 {
-
+                    Console.WriteLine(e.Message);
                 }
                 System.Threading.Thread.Sleep(200);
             }
         }
 
-        public void invokeTextBox()
+        private void invokeButton(frmMain main,Dictionary<string, string> dictUsers)
         {
-            //if (t.InvokeRequired)
-            //{
-            //    //t.Invoke(new Action<TextBox, string>(invokeTextBox), new Object[] { t, s });
-            //}
-            //else
-            //{
-            //    //t.AppendText(s);
-            //}
+            if (dictUsers != null)
+            {
+                main.Invoke(main.reFreshPanel);
+                foreach (KeyValuePair<string, string> user in dictUsers)
+                {
+                    main.Invoke(main.myDelegate, new Object[] { user.Key });
+                }
+            }
+        }
+
+        private void RefreshPanelAsideMethod()
+        {
+            List<Button> buttons = panelAside.Controls.OfType<Button>().ToList();
+            foreach (Button btn in buttons)
+            {
+                btn.Click -= new EventHandler(this.button2_Click); //It's unnecessary
+                panelAside.Controls.Remove(btn);
+                btn.Dispose();
+            }
+            dock = 0;
+        }
+
+        private void AddButtonMethod(string fullname)
+        {
+            Button button = new Button();
+            button.Text = fullname;
+            button.BackColor = button2.BackColor;
+            button.UseVisualStyleBackColor = false;
+            button.Height = button2.Height;
+            button.Width = button2.Width;
+            button.FlatStyle = button2.FlatStyle;
+            button.FlatAppearance.BorderColor = button2.FlatAppearance.BorderColor;
+            button.FlatAppearance.BorderSize = button2.FlatAppearance.BorderSize;
+            button.FlatAppearance.MouseOverBackColor = button2.FlatAppearance.MouseOverBackColor;
+            button.FlatAppearance.MouseDownBackColor = button2.FlatAppearance.MouseDownBackColor;
+            button.Image = button2.Image;
+            button.TextAlign = button2.TextAlign;
+            button.ImageAlign = button2.ImageAlign;
+            button.Location = button2.Location;
+            button.Anchor = button2.Anchor;
+            button.Dock = button2.Dock;
+            button.Top = dock;
+            panelAside.Controls.Add(button);
+            dock += button.Height;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -203,6 +311,29 @@ namespace ChatsApp
         private void btnMinimize_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private string genRoomName(string toUser)
+        {
+            string roomName = "";
+            roomName = this.username + toUser;
+            return roomName;
+        }
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+            getConfig();
+            connect(hostAddress, iPort);
+        }
+
+        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
         }
     }
 }

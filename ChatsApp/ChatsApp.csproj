@@ -73,6 +73,12 @@
       <DependentUpon>chatbox.cs</DependentUpon>
     </Compile>
     <Compile Include="ChatClientControl.cs" />
+    <Compile Include="frmConfigSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConfigSettings.Designer.cs">
+      <DependentUpon>frmConfigSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="chatbox.resx">
       <DependentUpon>chatbox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConfigSettings.resx">
+      <DependentUpon>frmConfigSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
@@ -210,6 +219,9 @@
       <Project>{4eb9c27d-d5a4-49f4-9dc3-dcec76b0091e}</Project>
       <Name>ChatObject</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_settings_100px.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

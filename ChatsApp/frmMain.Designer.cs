@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
+            this.cmsSetting = new MaterialSkin.Controls.MaterialContextMenuStrip();
+            this.tmsiDeleteMessage = new System.Windows.Forms.ToolStripMenuItem();
             this.lblNameUser = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -47,9 +49,8 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.panelChatbox = new System.Windows.Forms.Panel();
             this.chatbox1 = new ChatsApp.chatbox();
-            this.cmsSetting = new MaterialSkin.Controls.MaterialContextMenuStrip();
-            this.tmsiDeleteMessage = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
+            this.cmsSetting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -57,7 +58,6 @@
             this.panelAside.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panelChatbox.SuspendLayout();
-            this.cmsSetting.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -79,6 +79,22 @@
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
+            // 
+            // cmsSetting
+            // 
+            this.cmsSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cmsSetting.Depth = 0;
+            this.cmsSetting.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsSetting.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tmsiDeleteMessage});
+            this.cmsSetting.MouseState = MaterialSkin.MouseState.HOVER;
+            this.cmsSetting.Name = "cmsSetting";
+            resources.ApplyResources(this.cmsSetting, "cmsSetting");
+            // 
+            // tmsiDeleteMessage
+            // 
+            this.tmsiDeleteMessage.Name = "tmsiDeleteMessage";
+            resources.ApplyResources(this.tmsiDeleteMessage, "tmsiDeleteMessage");
             // 
             // lblNameUser
             // 
@@ -191,7 +207,6 @@
             // 
             this.button2.BackColor = System.Drawing.Color.WhiteSmoke;
             this.button2.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
-            this.button2.FlatAppearance.BorderSize = 0;
             this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
             this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
             resources.ApplyResources(this.button2, "button2");
@@ -199,6 +214,7 @@
             this.button2.Image = global::ChatsApp.Properties.Resources.icons8_communication_64;
             this.button2.Name = "button2";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // panel4
             // 
@@ -218,23 +234,7 @@
             resources.ApplyResources(this.chatbox1, "chatbox1");
             this.chatbox1.Name = "chatbox1";
             // 
-            // cmsSetting
-            // 
-            this.cmsSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.cmsSetting.Depth = 0;
-            this.cmsSetting.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.cmsSetting.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tmsiDeleteMessage});
-            this.cmsSetting.MouseState = MaterialSkin.MouseState.HOVER;
-            this.cmsSetting.Name = "cmsSetting";
-            resources.ApplyResources(this.cmsSetting, "cmsSetting");
-            // 
-            // tmsiDeleteMessage
-            // 
-            this.tmsiDeleteMessage.Name = "tmsiDeleteMessage";
-            resources.ApplyResources(this.tmsiDeleteMessage, "tmsiDeleteMessage");
-            // 
-            // Form1
+            // frmMain
             // 
             this.AllowDrop = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -245,12 +245,15 @@
             this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "Form1";
+            this.Name = "frmMain";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.cmsSetting.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -259,7 +262,6 @@
             this.panelAside.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panelChatbox.ResumeLayout(false);
-            this.cmsSetting.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

@@ -24,12 +24,12 @@ namespace ChatsApp.Properties {
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
         
-        public static global::System.Resources.ResourceManager resourceMan;
+        private static global::System.Resources.ResourceManager resourceMan;
         
-        public static global::System.Globalization.CultureInfo resourceCulture;
+        private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public Resources() {
+        internal Resources() {
         }
         
         /// <summary>
@@ -196,6 +196,16 @@ namespace ChatsApp.Properties {
         public static System.Drawing.Bitmap icons8_send_letter_96 {
             get {
                 object obj = ResourceManager.GetObject("icons8-send-letter-96", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap icons8_settings_100px {
+            get {
+                object obj = ResourceManager.GetObject("icons8_settings_100px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

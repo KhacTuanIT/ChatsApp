@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
 using System.Collections.Specialized;
+using System.Reflection;
+using System.Xml;
 
 namespace ChatsApp
 {
@@ -35,18 +37,11 @@ namespace ChatsApp
         {
             try
             {
-                var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                var settings = configFile.AppSettings.Settings;
-                if (settings[key] == null)
-                {
-                    settings.Add(key, value);
-                }
-                else
-                {
-                    settings[key].Value = value;
-                }
-                configFile.Save(ConfigurationSaveMode.Modified);
-                ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
+                System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                config.AppSettings.Settings.Remove(key);
+                config.AppSettings.Settings.Add(key, value);
+                config.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");
             }
             catch (ConfigurationErrorsException)
             {
@@ -104,6 +99,7 @@ namespace ChatsApp
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            value = txtValue.Text;
             if (key != "" && value != "")
             {
                 addUpdateAppSettings(key, value);
@@ -114,7 +110,8 @@ namespace ChatsApp
 
         private void frmConfigSettings_Load(object sender, EventArgs e)
         {
-            ReadAllSettings();
+            settings = ReadAllSettings();
+            setUpComboBox();
         }
     }
 }
