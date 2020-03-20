@@ -27,6 +27,9 @@ namespace ServerChatsApp
         private ChatDbContext context = null;
         private bool statusRun = false;
         private bool isQuit = false;
+
+        private List<string> userInRoom = null;
+
         public frmServer()
         {
             InitializeComponent();
@@ -50,7 +53,6 @@ namespace ServerChatsApp
         {
             if (statusRun == false)
             {
-                MessageBox.Show("OK");
 
                 try
                 {
@@ -126,11 +128,13 @@ namespace ServerChatsApp
 
         private void runRecvData()
         {
+            List<MixUserInRoom> userInRooms = new List<MixUserInRoom>();
+            bool messageChat = false;
+            bool status = true;
             while (this.chatServerControl != null && this.chatServerControl.isConnected())
             {
                 try
                 {
-                    bool status = true;
                     Object o = this.mqRequestQueue.Dequeue();
                     string data = "";
                     string username = "";
@@ -222,6 +226,18 @@ namespace ServerChatsApp
                                 }
                             }
                         }
+                        else if (chatData.Header.Header == Header.Message)
+                        {
+                            messageChat = true;
+                            userInRooms = getUserInRooms(chatData.Header.SessionTo, chatData.Header.SessionFrom);
+                        }
+                        else if (chatData.Header.Header == Header.LoadMessage)
+                        {
+                            channel = (SocketChannel)this.mhSessionTable[chatData.Header.SessionFrom];
+                            List<TempMessage> messages = GetTempMessages(chatData.Header.SessionTo);
+
+                            //  
+                        }
                         else if (chatData.Header.Header == Header.Quit)
                         {
                             channel = (SocketChannel)this.mhSessionTable[chatData.Header.SessionFrom];
@@ -243,7 +259,28 @@ namespace ServerChatsApp
                             isQuit = false;
                             channel.stopChannel();
                         }
-                        else
+                        else if (messageChat)
+                        { 
+                            foreach (MixUserInRoom user in userInRooms)
+                            {
+                                try
+                                {
+                                    chatData.Header.SessionTo = user.Username;
+                                    chatData.Payload.Fullname = user.Fullname;
+                                    chatData.Payload.ChatroomName = user.RoomName;
+                                    channel = (SocketChannel)this.mhSessionTable[user.Username];
+                                    if (channel != null)
+                                    {
+                                        channel.sendData(chatData);
+                                    }
+                                }
+                                catch (Exception)
+                                {
+
+                                }
+                            }
+                        }
+                        else 
                         {
                             channel.sendData(chatData);
                             channel.logMonitor(data);
@@ -264,6 +301,81 @@ namespace ServerChatsApp
                 }
                 System.Threading.Thread.Sleep(300);
             }
+        }
+
+        private List<TempMessage> GetTempMessages(string roomName)
+        {
+            List<TempMessage> tempMessages = new List<TempMessage>();
+
+            var messages = context.Messages.Where(x => x.ChatroomName == roomName);
+            if (messages != null)
+            {
+                foreach (var message in messages)
+                {
+                    User user = context.Users.Where(x => x.Id == message.UserId).FirstOrDefault();
+                    TempMessage temp = new TempMessage()
+                    {
+                        ChatType = message.MessageType.Type,
+                        Fullname = user.Fullname,
+                        Username = user.Username,
+                        Message = message.Content,
+                        Time = message.Time.ToShortTimeString()
+                    };
+                }
+            }
+
+            if (tempMessages.Count > 0) return tempMessages;
+            return null;
+        }
+
+        private List<MixUserInRoom> getUserInRooms(string roomName, string fromName)
+        {
+            List<MixUserInRoom> userInRooms = new List<MixUserInRoom>();
+            var idRoom = context.Chatrooms.Where(x => x.RoomName == roomName).FirstOrDefault().Id;
+            if (idRoom > 0)
+            {
+                var userIdInRooms = context.Chats.Where(x => x.ChatRoomId == idRoom);
+                if (userIdInRooms != null)
+                {
+                    foreach (var userId in userIdInRooms)
+                    {
+                        var user = context.Users.Where(x => x.Id == userId.UserId).FirstOrDefault();
+                        if (user != null && user.Username != fromName)
+                        {
+                            MixUserInRoom mixUser = new MixUserInRoom()
+                            {
+                                Username = user.Username,
+                                Fullname = user.Fullname,
+                                RoomName = roomName
+                            };
+                            userInRooms.Add(mixUser);
+                        }
+                    }
+                }
+            }
+
+            if (userInRooms.Count > 0) return userInRooms;
+            return null;
+        }
+
+        private List<string> getAllUserInRoom(string roomName)
+        {
+            List<string> allUserInRoom;
+            int roomId = context.Chatrooms.Where(x => x.RoomName == roomName).FirstOrDefault().Id;
+            if (roomId <= 0) return null;
+            var idUsers = context.Chats.Where(x => x.ChatRoomId == roomId);
+            if (idUsers != null)
+            {
+                allUserInRoom = new List<string>();
+                foreach (var user in idUsers)
+                {
+                    string username = context.Users.Where(x => x.Id == user.Id).FirstOrDefault().Username;
+                    allUserInRoom.Add(username);
+                }
+
+                if (allUserInRoom.Count > 0) return allUserInRoom;
+            }
+            return null;
         }
 
         private string getAllUser()
@@ -389,6 +501,22 @@ namespace ServerChatsApp
                 btnStart_Click(sender, e);
             }
         }
+    }
+
+    public class TempMessage
+    {
+        public string Username { get; set; }
+        public string Fullname { get; set; }
+        public string Message { get; set; }
+        public string ChatType { get; set; }
+        public string Time { get; set; }
+    }
+
+    public class MixUserInRoom
+    {
+        public string RoomName { get; set; }
+        public string Username { get; set; }
+        public string Fullname { get; set; }
     }
 
     /// <summary>

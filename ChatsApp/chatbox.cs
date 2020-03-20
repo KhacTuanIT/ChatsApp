@@ -8,14 +8,33 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ServerChatsApp.Model;
+using ChatObject;
 
 namespace ChatsApp
 {
     public partial class chatbox : UserControl
     {
         private int curTop = 10;
-
+        private ChatClientControl chatClient = null;
+        private string roomName = "";
         buble oldBuble = new buble();
+        private string username = "";
+        private string messageType  = "";
+        private string fullname = "";
+        private ChatObject.ChatType type;
+
+        public chatbox(ChatClientControl chatClient, string roomName, string  username, string messageType, string fullname)
+        {
+            InitializeComponent();
+            this.chatClient = chatClient;
+            this.roomName = roomName;
+            this.username = username;
+            this.messageType = messageType;
+            this.fullname = fullname;
+            oldBuble.Top = 0 - oldBuble.Height + 10;
+            buble1.Visible = false;
+            buble2.Visible = false;
+        }
         public chatbox()
         {
             //if (!this.DesignMode)
@@ -40,11 +59,39 @@ namespace ChatsApp
 
         private void button2_Click(object sender, EventArgs e)
         {
-            sendMessage("Tuan", "Building out a website or brochure based heavily on an image? With Pictaculous, you can simply upload that picture and the app will spit out a color palette that pairs perfectly with it.", "12:00");
-            receiveMessage("R", "Hello", "12:00");
-            sendFile("Tuan", "FIle", "12:00");
-            receiveFile("R", "File", "12:00");
-            panel2.VerticalScroll.Value = panel2.VerticalScroll.Maximum;
+            if (type == ChatObject.ChatType.Message)
+            {
+                string mess = txtMessage.Text;
+                if (mess != "" && mess != null)
+                {
+                    sendMessage(this.fullname, mess, DateTime.Now.ToShortTimeString());
+                    ChatHeaderObject header = new ChatHeaderObject()
+                    {
+                        Header = Header.Message,
+                        SessionFrom = this.username,
+                        SessionTo = this.roomName,
+                        ChatType = ChatObject.ChatType.Message
+                    };
+                    ChatPayloadObject payload = new ChatPayloadObject()
+                    {
+                        MessageType = this.messageType,
+                        Data = mess,
+                        Time = DateTime.Now,
+                        Fullname = this.fullname
+                    };
+                    ChatDataObject chatData = new ChatDataObject()
+                    {
+                        Header = header,
+                        Payload = payload
+                    };
+                    this.chatClient.sendDataObject(chatData);
+                    txtMessage.Text = "";
+                }
+            }
+            else if (type == ChatObject.ChatType.File)
+            {
+
+            }
         }
 
         public void sendMessage(string name, string message, string time)
@@ -59,6 +106,7 @@ namespace ChatsApp
             panel2.Controls.Add(buble);
 
             oldBuble = buble;
+            panel2.VerticalScroll.Value = panel2.VerticalScroll.Maximum;
         }
 
         public void receiveMessage(string name, string message, string time)
@@ -73,6 +121,7 @@ namespace ChatsApp
             panel2.Controls.Add(buble);
 
             oldBuble = buble;
+            panel2.VerticalScroll.Value = panel2.VerticalScroll.Maximum;
         }
 
         public void sendFile(string name, string title, string time)
@@ -87,6 +136,7 @@ namespace ChatsApp
             panel2.Controls.Add(buble);
 
             oldBuble = buble;
+            panel2.VerticalScroll.Value = panel2.VerticalScroll.Maximum;
         }
 
         public void receiveFile(string name, string title, string time)
@@ -101,6 +151,21 @@ namespace ChatsApp
             panel2.Controls.Add(buble);
 
             oldBuble = buble;
+            panel2.VerticalScroll.Value = panel2.VerticalScroll.Maximum;
+        }
+
+        private void txtMessage_KeyDown(object sender, KeyEventArgs e)
+        {
+            type = ChatObject.ChatType.Message;
+            if (e.KeyCode == Keys.Enter)
+            {
+                button2_Click(sender, e);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            type = ChatObject.ChatType.File;
         }
     }
 }

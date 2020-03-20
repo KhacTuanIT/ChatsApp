@@ -62,7 +62,8 @@ namespace ChatsApp
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                lblWarning.Text = "Kết nối tới máy chủ thất bại!";
+                isConnect = false;
             }
         }
 
@@ -152,9 +153,16 @@ namespace ChatsApp
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            if (!isConnect)
+            {
+                getConfig();
+                connect(hostAddress, iPort);
+                Thread.Sleep(200);
+                isConnect = true;
+            }
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
-
+            lblWarning.Text = "";
             if ("".Equals(username) || "".Equals(password))
             {
                 lblWarning.Text = "Chưa điền tài khoản/mật khẩu";
@@ -169,30 +177,38 @@ namespace ChatsApp
                 checkLogin(username, password);
                 if (chatClient != null)
                 {
-                    Object o = this.chatClient.recvDataObject();
-                    if (o != null)
+                    try
                     {
-                        ChatDataObject chatData = (ChatDataObject)o;
-
-                        if (chatData.Header.Header == Header.Login)
+                        Object o = this.chatClient.recvDataObject();
+                        if (o != null)
                         {
-                            if (chatData.Payload.StatusCode == StatusCode.MissUsername)
+                            ChatDataObject chatData = (ChatDataObject)o;
+
+                            if (chatData.Header.Header == Header.Login)
                             {
-                                invokeLabel(_login.lblWarning, "Tài khoản không chính xác");
-                            }
-                            else if (chatData.Payload.StatusCode == StatusCode.PasswordWrong)
-                            {
-                                invokeLabel(_login.lblWarning, "Mật khẩu không chính xác");
-                            }
-                            else if (chatData.Payload.StatusCode == StatusCode.CheckTrue)
-                            {
-                                chatData.Header.Header = Header.Quit;
-                                this.chatClient.sendDataObject(chatData);
-                                invokehideForm(_frmLogin);
-                                frmMain main = new frmMain(chatData.Payload.Username, chatData.Payload.Fullname);
-                                main.Show();
+                                if (chatData.Payload.StatusCode == StatusCode.MissUsername)
+                                {
+                                    invokeLabel(_login.lblWarning, "Tài khoản không chính xác");
+                                }
+                                else if (chatData.Payload.StatusCode == StatusCode.PasswordWrong)
+                                {
+                                    invokeLabel(_login.lblWarning, "Mật khẩu không chính xác");
+                                }
+                                else if (chatData.Payload.StatusCode == StatusCode.CheckTrue)
+                                {
+                                    chatData.Header.Header = Header.Quit;
+                                    this.chatClient.sendDataObject(chatData);
+                                    invokehideForm(_frmLogin);
+                                    frmMain main = new frmMain(chatData.Payload.Username, chatData.Payload.Fullname);
+                                    main.Show();
+                                }
                             }
                         }
+                    }
+                    catch (Exception)
+                    {
+                        lblWarning.Text = "Kết nối tới máy chủ thất bại!";
+                        isConnect = false;
                     }
                 }
             }
@@ -216,7 +232,16 @@ namespace ChatsApp
                 Header = header,
                 Payload = payload
             };
-            this.chatClient.sendDataObject(chatData);
+            try
+            {
+                this.chatClient.sendDataObject(chatData);
+            }
+            catch (Exception)
+            {
+                lblWarning.Text = "Kết nối tới máy chủ thất bại!";
+                isConnect = false;
+            }
+            
         }
 
         private void txtUsername_KeyDown(object sender, KeyEventArgs e)

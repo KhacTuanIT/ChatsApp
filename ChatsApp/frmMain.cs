@@ -27,12 +27,14 @@ namespace ChatsApp
 
         private string username = "";
         private string fullname = "";
+        private string toUser = "";
 
         private string hostAddress = "";
         private int iPort = 0;
 
         private int dock = 0;
 
+        private chatbox box = null;
         public delegate void AddButton(string fullname);
         public AddButton myDelegate;
 
@@ -147,6 +149,23 @@ namespace ChatsApp
                             Dictionary<string, string> dictUsers = getAllUser(allUser);
                             invokeButton(_main, dictUsers);
                         }
+                        else if (chatData.Header.Header == Header.Message)
+                        {
+                            if (box != null)
+                            {
+                                if (chatData.Header.ChatType == ChatType.Message)
+                                {
+                                    string fullname = chatData.Payload.Fullname;
+                                    string message = chatData.Payload.Data;
+                                    string time = chatData.Payload.Time.ToShortTimeString();
+                                    box.receiveMessage(fullname, message, time);
+                                }
+                                else if (chatData.Header.ChatType == ChatType.File)
+                                {
+                                    
+                                }
+                            }
+                        }
                         //invokeTextBox(this.)
                     }
                 }
@@ -184,26 +203,51 @@ namespace ChatsApp
 
         private void AddButtonMethod(string fullname)
         {
-            Button button = new Button();
-            button.Text = fullname;
-            button.BackColor = button2.BackColor;
-            button.UseVisualStyleBackColor = false;
-            button.Height = button2.Height;
-            button.Width = button2.Width;
-            button.FlatStyle = button2.FlatStyle;
-            button.FlatAppearance.BorderColor = button2.FlatAppearance.BorderColor;
-            button.FlatAppearance.BorderSize = button2.FlatAppearance.BorderSize;
-            button.FlatAppearance.MouseOverBackColor = button2.FlatAppearance.MouseOverBackColor;
-            button.FlatAppearance.MouseDownBackColor = button2.FlatAppearance.MouseDownBackColor;
-            button.Image = button2.Image;
-            button.TextAlign = button2.TextAlign;
-            button.ImageAlign = button2.ImageAlign;
-            button.Location = button2.Location;
-            button.Anchor = button2.Anchor;
-            button.Dock = button2.Dock;
-            button.Top = dock;
-            panelAside.Controls.Add(button);
-            dock += button.Height;
+            if (!fullname.Equals(this.fullname))
+            {
+                Button button = new Button();
+                button.Text = fullname;
+                button.BackColor = button2.BackColor;
+                button.UseVisualStyleBackColor = false;
+                button.Height = button2.Height;
+                button.Width = button2.Width;
+                button.FlatStyle = button2.FlatStyle;
+                button.FlatAppearance.BorderColor = button2.FlatAppearance.BorderColor;
+                button.FlatAppearance.BorderSize = button2.FlatAppearance.BorderSize;
+                button.FlatAppearance.MouseOverBackColor = button2.FlatAppearance.MouseOverBackColor;
+                button.FlatAppearance.MouseDownBackColor = button2.FlatAppearance.MouseDownBackColor;
+                button.Image = button2.Image;
+                button.TextAlign = button2.TextAlign;
+                button.ImageAlign = button2.ImageAlign;
+                button.Location = button2.Location;
+                button.Anchor = button2.Anchor;
+                button.Dock = button2.Dock;
+                button.Top = dock;
+                button.Click += new EventHandler(this.button2_Click);
+                panelAside.Controls.Add(button);
+                dock += button.Height;
+            }
+        }
+
+        private void RefreshChatboxPanel()
+        {
+            List<chatbox> chatboxs = panelChatbox.Controls.OfType<chatbox>().ToList();
+            foreach (chatbox box in chatboxs)
+            {
+                panelChatbox.Controls.Remove(box);
+            }
+        }
+
+        private void AddChatBox()
+        {
+            RefreshChatboxPanel();
+            box = new chatbox(this.chatClient, this.toUser, this.username, "", this.fullname);
+            box.Anchor = chatbox1.Anchor;
+            box.Dock = chatbox1.Dock;
+            box.Height = chatbox1.Height;
+            box.Width = chatbox1.Width;
+            box.Location = chatbox1.Location;
+            panelChatbox.Controls.Add(box);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -315,7 +359,8 @@ namespace ChatsApp
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            toUser = (sender as Button).Text;
+            AddChatBox();
         }
 
         private string genRoomName(string toUser)

@@ -25,3 +25,4 @@ E:\NetworkProgramming\App\v7\ChatsApp\ServerChatsApp\obj\Debug\ServerChatsApp.Mi
 E:\NetworkProgramming\App\v7\ChatsApp\ServerChatsApp\obj\Debug\ServerChatsApp.Migrations.v5_chatsapp.resources
 E:\NetworkProgramming\App\v7\ChatsApp\ServerChatsApp\obj\Debug\ServerChatsApp.Migrations.v6_chatsapp.resources
 E:\NetworkProgramming\App\v7\ChatsApp\ServerChatsApp\obj\Debug\ServerChatsApp.Migrations.v7_chatsapp.resources
+E:\NetworkProgramming\App\v7\ChatsApp\ServerChatsApp\obj\Debug\ServerChatsApp.Migrations.v8_chatsapp.resources

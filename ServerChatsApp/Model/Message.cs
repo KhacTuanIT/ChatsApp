@@ -15,6 +15,7 @@ namespace ServerChatsApp.Model
         public string Content { get; set; }
         public DateTime Time { get; set; }
 
+        public int UserId { get; set; }
         public string ChatroomName { get; set; }
         public MessageType MessageType { get; set; }
     }

@@ -102,6 +102,7 @@
             this.txtIPServer.SelectionStart = 0;
             this.txtIPServer.Size = new System.Drawing.Size(257, 28);
             this.txtIPServer.TabIndex = 4;
+            this.txtIPServer.Text = "192.168.1.6";
             this.txtIPServer.UseSystemPasswordChar = false;
             // 
             // frmServer

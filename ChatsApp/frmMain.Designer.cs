@@ -283,11 +283,11 @@
         private System.Windows.Forms.Label lblNameUser;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panelChatbox;
-        private chatbox chatbox1;
         private System.Windows.Forms.Button btnScreen;
         private System.Windows.Forms.Button btnMinimize;
         private MaterialSkin.Controls.MaterialContextMenuStrip cmsSetting;
         private System.Windows.Forms.ToolStripMenuItem tmsiDeleteMessage;
+        private chatbox chatbox1;
     }
 }
 

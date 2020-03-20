@@ -38,24 +38,39 @@ namespace ChatsApp
             }
             catch (Exception e)
             {
-                Console.Write(e.Message);
+                throw e;
             }
             return result;
         }
 
         public void sendDataObject(Object o)
         {
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            try
+            {
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
 
-            binaryFormatter.AssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple;
-            binaryFormatter.Serialize(this.networkStream, o);
+                binaryFormatter.AssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple;
+                binaryFormatter.Serialize(this.networkStream, o);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public Object recvDataObject()
         {
             Object o = null;
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            o = binaryFormatter.Deserialize(this.networkStream);
+            try
+            {
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+                o = binaryFormatter.Deserialize(this.networkStream);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
             return o;
         }
 

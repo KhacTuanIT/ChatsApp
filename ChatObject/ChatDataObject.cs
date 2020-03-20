@@ -24,7 +24,7 @@ namespace ChatObject
     {
         public string SessionFrom { get; set; }
         public string SessionTo { get; set; }
-        public string ChatType { get; set; }
+        public ChatType ChatType { get; set; }
         public Header Header { get; set; }
     }
 
@@ -36,7 +36,7 @@ namespace ChatObject
         public string Filename { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public string ChatroomId { get; set; }
+        public string ChatroomName { get; set; }
         public StatusCode StatusCode { get; set; }
         public string Data { get; set; }
         public string MessageType { get; set; }
@@ -45,7 +45,12 @@ namespace ChatObject
 
     public enum Header
     {
-        Side, Message, Join, Quit, Download, Upload, Register, Login, Logout, Forget, Refresh
+        Side, Message, Join, Quit, Download, Upload, Register, Login, Logout, Forget, Refresh, LoadMessage
+    }
+
+    public enum ChatType
+    {
+        Message, File
     }
 
     public enum StatusCode

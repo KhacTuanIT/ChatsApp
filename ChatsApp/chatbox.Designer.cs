@@ -30,7 +30,7 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnSend = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtMessage = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.buble2 = new ChatsApp.buble();
@@ -43,7 +43,7 @@
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.btnSend);
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.txtMessage);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 466);
@@ -66,15 +66,16 @@
             this.btnSend.UseVisualStyleBackColor = false;
             this.btnSend.Click += new System.EventHandler(this.button2_Click);
             // 
-            // textBox1
+            // txtMessage
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(0, 0);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(552, 51);
-            this.textBox1.TabIndex = 2;
+            this.txtMessage.Location = new System.Drawing.Point(0, 0);
+            this.txtMessage.Multiline = true;
+            this.txtMessage.Name = "txtMessage";
+            this.txtMessage.Size = new System.Drawing.Size(552, 51);
+            this.txtMessage.TabIndex = 2;
+            this.txtMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtMessage_KeyDown);
             // 
             // button1
             // 
@@ -88,6 +89,7 @@
             this.button1.Size = new System.Drawing.Size(44, 51);
             this.button1.TabIndex = 1;
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel2
             // 
@@ -112,7 +114,7 @@
             this.buble2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(166)))), ((int)(((byte)(154)))));
             this.buble2.Location = new System.Drawing.Point(87, 144);
             this.buble2.Name = "buble2";
-            this.buble2.Size = new System.Drawing.Size(548, 108);
+            this.buble2.Size = new System.Drawing.Size(744, 89);
             this.buble2.TabIndex = 1;
             // 
             // buble1
@@ -124,7 +126,7 @@
             this.buble1.BackColor = System.Drawing.Color.Gray;
             this.buble1.Location = new System.Drawing.Point(14, 16);
             this.buble1.Name = "buble1";
-            this.buble1.Size = new System.Drawing.Size(548, 108);
+            this.buble1.Size = new System.Drawing.Size(744, 89);
             this.buble1.TabIndex = 0;
             // 
             // chatbox
@@ -148,7 +150,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnSend;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtMessage;
         private System.Windows.Forms.Panel panel2;
         private buble buble2;
         private buble buble1;

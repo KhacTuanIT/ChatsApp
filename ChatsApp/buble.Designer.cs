@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.panelBubble = new System.Windows.Forms.Panel();
+            this.lblUser = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
             this.lblMessage = new System.Windows.Forms.Label();
             this.cmsDownload = new MaterialSkin.Controls.MaterialContextMenuStrip();
             this.tsmiDownload = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblUser = new System.Windows.Forms.Label();
             this.panelBubble.SuspendLayout();
             this.cmsDownload.SuspendLayout();
             this.SuspendLayout();
@@ -52,14 +52,26 @@
             this.panelBubble.TabIndex = 0;
             this.panelBubble.Resize += new System.EventHandler(this.panelBubble_Resize);
             // 
+            // lblUser
+            // 
+            this.lblUser.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUser.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblUser.Location = new System.Drawing.Point(10, 53);
+            this.lblUser.Name = "lblUser";
+            this.lblUser.Size = new System.Drawing.Size(129, 25);
+            this.lblUser.TabIndex = 4;
+            this.lblUser.Text = "Khac Tuan";
+            this.lblUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // lblTime
             // 
             this.lblTime.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lblTime.Location = new System.Drawing.Point(145, 53);
+            this.lblTime.Location = new System.Drawing.Point(593, 53);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(148, 25);
             this.lblTime.TabIndex = 3;
             this.lblTime.Text = "00:00 AM";
+            this.lblTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblMessage
             // 
@@ -93,16 +105,6 @@
             this.tsmiDownload.Name = "tsmiDownload";
             this.tsmiDownload.Size = new System.Drawing.Size(147, 26);
             this.tsmiDownload.Text = "Tải xuống";
-            // 
-            // lblUser
-            // 
-            this.lblUser.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUser.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lblUser.Location = new System.Drawing.Point(10, 53);
-            this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(129, 25);
-            this.lblUser.TabIndex = 4;
-            this.lblUser.Text = "Khac Tuan";
             // 
             // buble
             // 
