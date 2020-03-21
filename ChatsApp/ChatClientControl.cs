@@ -68,7 +68,6 @@ namespace ChatsApp
             }
             catch (Exception e)
             {
-
                 throw e;
             }
             return o;

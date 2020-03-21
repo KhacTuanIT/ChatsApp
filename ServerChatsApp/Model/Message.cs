@@ -9,14 +9,12 @@ namespace ServerChatsApp.Model
     public class Message
     {
         public int Id { get; set; }
-        public int ChatId { get; set; }
-        public int MessageTypeId { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
         public DateTime Time { get; set; }
 
         public int UserId { get; set; }
         public string ChatroomName { get; set; }
-        public MessageType MessageType { get; set; }
+        public ChatObject.ChatTypeMess ChatType { get; internal set; }
     }
 }

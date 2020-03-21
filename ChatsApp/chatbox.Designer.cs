@@ -110,11 +110,10 @@
             this.buble2.AllowDrop = true;
             this.buble2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buble2.AutoSize = true;
             this.buble2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(166)))), ((int)(((byte)(154)))));
             this.buble2.Location = new System.Drawing.Point(87, 144);
             this.buble2.Name = "buble2";
-            this.buble2.Size = new System.Drawing.Size(744, 89);
+            this.buble2.Size = new System.Drawing.Size(547, 108);
             this.buble2.TabIndex = 1;
             // 
             // buble1
@@ -122,11 +121,10 @@
             this.buble1.AllowDrop = true;
             this.buble1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buble1.AutoSize = true;
             this.buble1.BackColor = System.Drawing.Color.Gray;
             this.buble1.Location = new System.Drawing.Point(14, 16);
             this.buble1.Name = "buble1";
-            this.buble1.Size = new System.Drawing.Size(744, 89);
+            this.buble1.Size = new System.Drawing.Size(547, 108);
             this.buble1.TabIndex = 0;
             // 
             // chatbox
@@ -140,7 +138,6 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }

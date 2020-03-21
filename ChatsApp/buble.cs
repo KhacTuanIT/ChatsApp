@@ -53,13 +53,24 @@ namespace ChatsApp
         private void SetHeight()
         {
             Size maxSize = new Size(200, int.MaxValue);
-            Graphics g = CreateGraphics();
-            SizeF size = g.MeasureString(lblMessage.Text, lblMessage.Font, lblMessage.Width);
+            Graphics g = null;
+            try
+            {
+                 g = CreateGraphics();
+            }
+            catch (Exception)
+            {
 
-            lblMessage.Height = int.Parse(Math.Round(size.Height + 2, 0).ToString());
-            lblTime.Top = lblMessage.Bottom + 10;
-            panelBubble.Height = lblTime.Bottom + 10;
-            this.Height = lblTime.Bottom + 10;
+            }
+            if (g != null)
+            {
+                SizeF size = g.MeasureString(lblMessage.Text, lblMessage.Font, lblMessage.Width);
+
+                lblMessage.Height = int.Parse(Math.Round(size.Height + 2, 0).ToString());
+                lblTime.Top = lblMessage.Bottom + 10;
+                panelBubble.Height = lblTime.Bottom + 10;
+                this.Height = lblTime.Bottom + 10;
+            }
         }
 
         private void buble_Resize(object sender, EventArgs e)

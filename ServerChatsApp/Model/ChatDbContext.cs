@@ -17,8 +17,6 @@ namespace ServerChatsApp.Model
         public DbSet<User> Users { get; set; }
         public DbSet<Chatroom> Chatrooms { get; set; }
         public DbSet<Chat> Chats { get; set; }
-        public DbSet<ChatType> ChatTypes { get; set; }
-        public DbSet<MessageType> MessageTypes { get; set; }
         public DbSet<Message> Messages { get; set; }
     }
 }

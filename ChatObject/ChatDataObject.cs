@@ -24,7 +24,7 @@ namespace ChatObject
     {
         public string SessionFrom { get; set; }
         public string SessionTo { get; set; }
-        public ChatType ChatType { get; set; }
+        public ChatTypeMess ChatType { get; set; }
         public Header Header { get; set; }
     }
 
@@ -41,14 +41,15 @@ namespace ChatObject
         public string Data { get; set; }
         public string MessageType { get; set; }
         public DateTime Time { get; set; }
+        public List<TempMessage> TempMessages { get; set; }
     }
 
     public enum Header
     {
-        Side, Message, Join, Quit, Download, Upload, Register, Login, Logout, Forget, Refresh, LoadMessage
+        Side, Message, Join, Quit, Download, Upload, Register, Login, Logout, Forget, Refresh, LoadMessage, GetRoomName
     }
 
-    public enum ChatType
+    public enum ChatTypeMess
     {
         Message, File
     }
@@ -62,5 +63,18 @@ namespace ChatObject
         MissField,
         MissUsername,
 
+    }
+
+    public class TempMessage
+    {
+        public string Username { get; set; }
+        public string Fullname { get; set; }
+        public string Message { get; set; }
+        public ChatTypeMess ChatType { get; set; }
+        public string Time { get; set; }
+        public string toString()
+        {
+            return Username + "," + Fullname + "," + Message + "," + ChatType + "," + Time;
+        }
     }
 }

@@ -58,13 +58,14 @@
             this.lblUser.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.lblUser.Location = new System.Drawing.Point(10, 53);
             this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(129, 25);
+            this.lblUser.Size = new System.Drawing.Size(250, 25);
             this.lblUser.TabIndex = 4;
             this.lblUser.Text = "Khac Tuan";
             this.lblUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblTime
             // 
+            this.lblTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTime.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.lblTime.Location = new System.Drawing.Point(593, 53);
             this.lblTime.Name = "lblTime";

@@ -33,6 +33,7 @@ namespace ChatsApp
         private int iPort = 0;
 
         private int dock = 0;
+        private bool loadBox = false;
 
         private chatbox box = null;
         public delegate void AddButton(string fullname);
@@ -86,11 +87,53 @@ namespace ChatsApp
 
                     thread.IsBackground = true;
                     thread.Start();
+
+                    threadStart = new ThreadStart(sendLoadMessage);
+                    thread = new Thread(threadStart);
+
+                    thread.IsBackground = true;
+                    thread.Start();
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+            }
+        }
+
+        private void sendLoadMessage()
+        {
+            while (this.chatClient != null)
+            {
+                if (box != null && box.roomName != "" && loadBox)
+                {
+                    try
+                    {
+                        ChatHeaderObject header = new ChatHeaderObject()
+                        {
+                            SessionFrom = this.username,
+                            Header = Header.LoadMessage,
+                            SessionTo = box.roomName
+                        };
+                        ChatPayloadObject payload = new ChatPayloadObject()
+                        {
+
+                        };
+                        ChatDataObject chatData = new ChatDataObject()
+                        {
+                            Header = header,
+                            Payload = payload
+                        };
+                        this.chatClient.sendDataObject(chatData);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    loadBox = false;
+                }
+
+                System.Threading.Thread.Sleep(500);
             }
         }
 
@@ -149,31 +192,104 @@ namespace ChatsApp
                             Dictionary<string, string> dictUsers = getAllUser(allUser);
                             invokeButton(_main, dictUsers);
                         }
-                        else if (chatData.Header.Header == Header.Message)
+                        if (chatData.Header.Header == Header.Message)
                         {
                             if (box != null)
                             {
-                                if (chatData.Header.ChatType == ChatType.Message)
+                                if (chatData.Header.ChatType == ChatTypeMess.Message)
                                 {
                                     string fullname = chatData.Payload.Fullname;
                                     string message = chatData.Payload.Data;
                                     string time = chatData.Payload.Time.ToShortTimeString();
-                                    box.receiveMessage(fullname, message, time);
+                                    TempMessage tempMessage = new TempMessage()
+                                    {
+                                        Fullname = fullname,
+                                        Message = message,
+                                        Username = chatData.Header.SessionFrom,
+                                        ChatType = chatData.Header.ChatType,
+                                        Time = time
+                                    };
+                                    invokeOneMessageToChatBox(box, tempMessage);
                                 }
-                                else if (chatData.Header.ChatType == ChatType.File)
+                                else if (chatData.Header.ChatType == ChatTypeMess.File)
                                 {
                                     
                                 }
                             }
+                            else
+                            {
+                                AddChatBox(chatData.Payload.Fullname);
+                            }
                         }
-                        //invokeTextBox(this.)
+                        if (chatData.Header.Header == Header.LoadMessage)
+                        {
+                            string tempMessages = chatData.Payload.Data;
+                            List<TempMessage> messages = convertStringToTempMessage(tempMessages);
+                            if (box != null)
+                            {
+                                if (messages.Count > 0)
+                                {
+                                    invokeChatBox(box, messages);
+                                }
+                            }
+                        }
+                        if (chatData.Header.Header == Header.GetRoomName)
+                        {
+                            if (box != null)
+                            {
+                                box.roomName = chatData.Payload.ChatroomName;
+                            }
+                        }
                     }
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
+                    Console.WriteLine(e);
                 }
                 System.Threading.Thread.Sleep(200);
+            }
+        }
+
+        private List<TempMessage> convertStringToTempMessage(string tempMessage)
+        {
+            List<TempMessage> messages = new List<TempMessage>();
+            string[] arrMessages = tempMessage.Split(';');
+            if (arrMessages.Length > 0)
+            {
+                foreach (string message in arrMessages)
+                {
+                    if (message != "")
+                    {
+                        string[] arrTemp = message.Split(',');
+                        TempMessage temp = new TempMessage()
+                        {
+                            Username = arrTemp[0],
+                            Fullname = arrTemp[1],
+                            Message = arrTemp[2],
+                            ChatType = (ChatTypeMess)Enum.Parse(typeof(ChatTypeMess), arrTemp[3], true),
+                            Time = arrTemp[4]
+                        };
+                        messages.Add(temp);
+                    }
+                    
+                }
+            }
+            return messages;
+        }
+
+        private void invokeOneMessageToChatBox(chatbox box, TempMessage message)
+        {
+            if (message != null)
+            {
+                box.Invoke(box.addOneMessage, message);
+            }
+        }
+
+        private void invokeChatBox(chatbox box, List<TempMessage> messages)
+        {
+            if (messages.Count > 0)
+            {
+                box.Invoke(box.addMessage, messages);
             }
         }
 
@@ -238,16 +354,20 @@ namespace ChatsApp
             }
         }
 
-        private void AddChatBox()
+        private void AddChatBox(string toUser)
         {
-            RefreshChatboxPanel();
-            box = new chatbox(this.chatClient, this.toUser, this.username, "", this.fullname);
-            box.Anchor = chatbox1.Anchor;
-            box.Dock = chatbox1.Dock;
-            box.Height = chatbox1.Height;
-            box.Width = chatbox1.Width;
-            box.Location = chatbox1.Location;
-            panelChatbox.Controls.Add(box);
+            if (!lblNameUser.Text.Equals(toUser)) { 
+                RefreshChatboxPanel();
+                lblNameUser.Text = toUser;
+                box = new chatbox(this.chatClient, this.username, "", this.fullname, toUser);
+                box.Anchor = chatbox1.Anchor;
+                box.Dock = chatbox1.Dock;
+                box.Height = chatbox1.Height;
+                box.Width = chatbox1.Width;
+                box.Location = chatbox1.Location;
+                panelChatbox.Controls.Add(box);
+                loadBox = true;
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -360,15 +480,9 @@ namespace ChatsApp
         private void button2_Click(object sender, EventArgs e)
         {
             toUser = (sender as Button).Text;
-            AddChatBox();
+            AddChatBox(toUser);
         }
 
-        private string genRoomName(string toUser)
-        {
-            string roomName = "";
-            roomName = this.username + toUser;
-            return roomName;
-        }
 
         private void frmMain_Load(object sender, EventArgs e)
         {

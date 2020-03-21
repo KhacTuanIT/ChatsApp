@@ -13,14 +13,12 @@ namespace ChatsApp
 {
     public partial class Register : UserControl
     {
-        private ChatDbContext context = null;
         private string user = "user";
         private frmLogin _frmLogin = null;
 
         public Register(frmLogin _frmLogin, string user)
         {
             InitializeComponent();
-            this.context = context;
             this.user = user;
             this._frmLogin = _frmLogin;
         }
@@ -80,14 +78,10 @@ namespace ChatsApp
                 Password = password,
                 Time = DateTime.Now
             };
-            context.Users.Add(user);
-            context.SaveChanges();
         }
 
         private bool checkExistAccount(string username)
         {
-            var user = context.Users.Where(x => x.Username == username).FirstOrDefault();
-            if (user != null) return true;
             return false;
         }
 

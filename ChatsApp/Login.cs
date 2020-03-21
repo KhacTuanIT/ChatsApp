@@ -60,7 +60,7 @@ namespace ChatsApp
                     this.chatClient.sendDataObject(chatJoin);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 lblWarning.Text = "Kết nối tới máy chủ thất bại!";
                 isConnect = false;

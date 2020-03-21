@@ -16,24 +16,36 @@ namespace ChatsApp
     {
         private int curTop = 10;
         private ChatClientControl chatClient = null;
-        private string roomName = "";
+        public string roomName = "";
         buble oldBuble = new buble();
         private string username = "";
         private string messageType  = "";
         private string fullname = "";
-        private ChatObject.ChatType type;
+        public string toUser = "";
+        private ChatObject.ChatTypeMess type;
+        private chatbox _box = null;
 
-        public chatbox(ChatClientControl chatClient, string roomName, string  username, string messageType, string fullname)
+        public delegate void AddMessage(List<TempMessage> messages);
+        public AddMessage addMessage;
+
+        public delegate void AddOneMessage(TempMessage message);
+        public AddOneMessage addOneMessage;
+        
+        public chatbox(ChatClientControl chatClient, string  username, string messageType, string fullname, string toUser)
         {
             InitializeComponent();
+            _box = this;
             this.chatClient = chatClient;
-            this.roomName = roomName;
             this.username = username;
             this.messageType = messageType;
             this.fullname = fullname;
+            this.toUser = toUser;
             oldBuble.Top = 0 - oldBuble.Height + 10;
             buble1.Visible = false;
             buble2.Visible = false;
+            getRoomName();
+            addMessage = new AddMessage(AddMessageMethod);
+            addOneMessage = new AddOneMessage(AddOneMessageMethod);
         }
         public chatbox()
         {
@@ -47,6 +59,36 @@ namespace ChatsApp
             
         }
 
+        private void getRoomName()
+        {
+            ChatHeaderObject header = new ChatHeaderObject()
+            {
+                SessionFrom = this.username,
+                Header = Header.GetRoomName
+            };
+
+            ChatPayloadObject payload = new ChatPayloadObject()
+            {
+                Username = username,
+                Fullname = this.fullname,
+                Data = this.toUser
+            };
+            ChatDataObject chatData = new ChatDataObject()
+            {
+                Header = header,
+                Payload = payload
+            };
+            try
+            {
+                this.chatClient.sendDataObject(chatData);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        
         private void buble1_Load(object sender, EventArgs e)
         {
 
@@ -59,7 +101,7 @@ namespace ChatsApp
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (type == ChatObject.ChatType.Message)
+            if (type == ChatObject.ChatTypeMess.Message)
             {
                 string mess = txtMessage.Text;
                 if (mess != "" && mess != null)
@@ -70,7 +112,7 @@ namespace ChatsApp
                         Header = Header.Message,
                         SessionFrom = this.username,
                         SessionTo = this.roomName,
-                        ChatType = ChatObject.ChatType.Message
+                        ChatType = ChatObject.ChatTypeMess.Message
                     };
                     ChatPayloadObject payload = new ChatPayloadObject()
                     {
@@ -88,18 +130,79 @@ namespace ChatsApp
                     txtMessage.Text = "";
                 }
             }
-            else if (type == ChatObject.ChatType.File)
+            else if (type == ChatObject.ChatTypeMess.File)
             {
 
+            }
+        }
+
+        private void AddOneMessageMethod(TempMessage message)
+        {
+            if (message != null)
+            {
+                if (message.ChatType == ChatObject.ChatTypeMess.Message)
+                {
+                    if (message.Username.Equals(username))
+                    {
+                        sendMessage(message.Fullname, message.Message, message.Time);
+                    }
+                    else
+                    {
+                        receiveMessage(message.Fullname, message.Message, message.Time);
+                    }
+                }
+                else
+                {
+                    if (message.Username.Equals(username))
+                    {
+                        sendFile(message.Fullname, message.Message, message.Time);
+                    }
+                    else
+                    {
+                        receiveFile(message.Fullname, message.Message, message.Time);
+                    }
+                }
+            }
+        }
+
+        private void AddMessageMethod(List<TempMessage> messages)
+        {
+            if (messages.Count > 0)
+            {
+                foreach (TempMessage message in messages)
+                {
+                    if (message.ChatType == ChatObject.ChatTypeMess.Message)
+                    {
+                        if (message.Username.Equals(username))
+                        {
+                            sendMessage(message.Fullname, message.Message, message.Time);
+                        }
+                        else
+                        {
+                            receiveMessage(message.Fullname, message.Message, message.Time);
+                        }
+                    }
+                    else
+                    {
+                        if (message.Username.Equals(username))
+                        {
+                            sendFile(message.Fullname, message.Message, message.Time);
+                        }
+                        else
+                        {
+                            receiveFile(message.Fullname, message.Message, message.Time);
+                        }
+                    }
+                }
             }
         }
 
         public void sendMessage(string name, string message, string time)
         {
             buble buble = new ChatsApp.buble(name, message, time, MessageType.Out);
-            buble.Location = buble1.Location;
-            buble.Size = buble1.Size;
-            buble.Anchor = buble1.Anchor;
+            buble.Location = buble2.Location;
+            buble.Size = buble2.Size;
+            buble.Anchor = buble2.Anchor;
             buble.Top = oldBuble.Bottom + 10;
             curTop = buble.Bottom + 10;
 
@@ -112,21 +215,6 @@ namespace ChatsApp
         public void receiveMessage(string name, string message, string time)
         {
             buble buble = new ChatsApp.buble(name, message, time, MessageType.In);
-            buble.Location = buble2.Location;
-            buble.Size = buble2.Size;
-            buble.Anchor = buble2.Anchor;
-            buble.Top = oldBuble.Bottom + 10;
-            curTop = buble.Bottom + 10;
-
-            panel2.Controls.Add(buble);
-
-            oldBuble = buble;
-            panel2.VerticalScroll.Value = panel2.VerticalScroll.Maximum;
-        }
-
-        public void sendFile(string name, string title, string time)
-        {
-            buble buble = new ChatsApp.buble(name, title, time, MessageType.OutFile);
             buble.Location = buble1.Location;
             buble.Size = buble1.Size;
             buble.Anchor = buble1.Anchor;
@@ -139,9 +227,9 @@ namespace ChatsApp
             panel2.VerticalScroll.Value = panel2.VerticalScroll.Maximum;
         }
 
-        public void receiveFile(string name, string title, string time)
+        public void sendFile(string name, string title, string time)
         {
-            buble buble = new ChatsApp.buble(name, title, time, MessageType.InFile);
+            buble buble = new ChatsApp.buble(name, title, time, MessageType.OutFile);
             buble.Location = buble2.Location;
             buble.Size = buble2.Size;
             buble.Anchor = buble2.Anchor;
@@ -154,9 +242,24 @@ namespace ChatsApp
             panel2.VerticalScroll.Value = panel2.VerticalScroll.Maximum;
         }
 
+        public void receiveFile(string name, string title, string time)
+        {
+            buble buble = new ChatsApp.buble(name, title, time, MessageType.InFile);
+            buble.Location = buble1.Location;
+            buble.Size = buble1.Size;
+            buble.Anchor = buble1.Anchor;
+            buble.Top = oldBuble.Bottom + 10;
+            curTop = buble.Bottom + 10;
+
+            panel2.Controls.Add(buble);
+
+            oldBuble = buble;
+            panel2.VerticalScroll.Value = panel2.VerticalScroll.Maximum;
+        }
+
         private void txtMessage_KeyDown(object sender, KeyEventArgs e)
         {
-            type = ChatObject.ChatType.Message;
+            type = ChatObject.ChatTypeMess.Message;
             if (e.KeyCode == Keys.Enter)
             {
                 button2_Click(sender, e);
@@ -165,7 +268,7 @@ namespace ChatsApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-            type = ChatObject.ChatType.File;
+            type = ChatObject.ChatTypeMess.File;
         }
     }
 }

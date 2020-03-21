@@ -98,13 +98,31 @@
     <Compile Include="Migrations\202003201548514_v8_chatsapp.Designer.cs">
       <DependentUpon>202003201548514_v8_chatsapp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003210742204_v9_chatsapp.cs" />
+    <Compile Include="Migrations\202003210742204_v9_chatsapp.Designer.cs">
+      <DependentUpon>202003210742204_v9_chatsapp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003210755149_v10_chatsapp.cs" />
+    <Compile Include="Migrations\202003210755149_v10_chatsapp.Designer.cs">
+      <DependentUpon>202003210755149_v10_chatsapp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003210822100_v11_chatsapp.cs" />
+    <Compile Include="Migrations\202003210822100_v11_chatsapp.Designer.cs">
+      <DependentUpon>202003210822100_v11_chatsapp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003210824453_v12_chatsapp.cs" />
+    <Compile Include="Migrations\202003210824453_v12_chatsapp.Designer.cs">
+      <DependentUpon>202003210824453_v12_chatsapp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003210826318_v13_chatsapp.cs" />
+    <Compile Include="Migrations\202003210826318_v13_chatsapp.Designer.cs">
+      <DependentUpon>202003210826318_v13_chatsapp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Chat.cs" />
     <Compile Include="Model\ChatDbContext.cs" />
     <Compile Include="Model\Chatroom.cs" />
-    <Compile Include="Model\ChatType.cs" />
     <Compile Include="Model\Message.cs" />
-    <Compile Include="Model\MessageType.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -134,6 +152,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003201548514_v8_chatsapp.resx">
       <DependentUpon>202003201548514_v8_chatsapp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003210742204_v9_chatsapp.resx">
+      <DependentUpon>202003210742204_v9_chatsapp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003210755149_v10_chatsapp.resx">
+      <DependentUpon>202003210755149_v10_chatsapp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003210822100_v11_chatsapp.resx">
+      <DependentUpon>202003210822100_v11_chatsapp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003210824453_v12_chatsapp.resx">
+      <DependentUpon>202003210824453_v12_chatsapp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003210826318_v13_chatsapp.resx">
+      <DependentUpon>202003210826318_v13_chatsapp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
