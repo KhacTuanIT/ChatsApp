@@ -76,12 +76,14 @@ namespace ServerChatsApp
 
                     this.lblState.Text = "Server is Starting!";
                     this.btnStart.Text = "Stop";
+                    this.txtLog.Text = DateTime.Now + ": Server is starting!" + Environment.NewLine;
                     this.txtPort.Enabled = false;
                     statusRun = true;
                 }
                 catch (Exception ex)
                 {
                     Console.Write(ex.Message);
+                    this.lblState.Text = "Start failure, IP wrong!";
                 }
             }
             else
@@ -274,10 +276,24 @@ namespace ServerChatsApp
                         {
                             channel = (SocketChannel)this.mhSessionTable[chatData.Header.SessionFrom];
                             chatData.Payload.ChatroomName = GetRoomName(chatData.Payload.Fullname, chatData.Payload.Data);
-                            addUserToChat(chatData.Payload.ChatroomName, chatData.Payload.Fullname, chatData.Payload.Data);
+                            if (checkUser(chatData.Payload.Data))
+                            {
+                                addUserToChat(chatData.Payload.ChatroomName, chatData.Payload.Fullname, chatData.Payload.Data);
+                            }
                             data = DateTime.Now + ":Session from " + chatData.Header.SessionFrom + " get room name!";
                         }
-
+                        else if (chatData.Header.Header == Header.CreateRoom)
+                        {
+                            channel = (SocketChannel)this.mhSessionTable[chatData.Header.SessionFrom];
+                            if (createNewRoom(chatData.Payload.ChatroomName, chatData.Header.SessionFrom, chatData.Payload.Data))
+                            {
+                                chatData.Payload.StatusCode = StatusCode.CheckTrue;
+                            }
+                            else
+                            {
+                                chatData.Payload.StatusCode = StatusCode.CreateFail;
+                            }
+                        }
                         if (isQuit)
                         {
                             this.mhSessionTable.Remove(chatData.Header.SessionFrom);
@@ -329,6 +345,64 @@ namespace ServerChatsApp
             }
         }
 
+        private List<string> convertStringToList(string usersString)
+        {
+            List<string> users = usersString.Split(',').ToList();
+            return users;
+        }
+
+        private List<int> getUsersId(string username, List<string> users)
+        {
+            List<int> usersId = new List<int>();
+            var user = context.Users.Where(x => x.Username == username).FirstOrDefault();
+            if (user != null) usersId.Add(user.Id);
+            foreach (string fullname in users)
+            {
+                user = context.Users.Where(x => x.Fullname == fullname).FirstOrDefault();
+                if (user != null) usersId.Add(user.Id);
+            }
+            if (usersId.Count > 0) return usersId;
+            return null;
+        }
+
+        private bool addUserToChatroom(string roomName, string username, List<string> users)
+        {
+            List<int> usersId = getUsersId(username, users);
+            int roomId = context.Chatrooms.Where(x => x.RoomName == roomName).FirstOrDefault().Id;
+            if (usersId != null)
+            {
+                foreach (int userId in usersId)
+                {
+                    Chat chat = new Chat()
+                    {
+                        UserId = userId,
+                        ChatRoomId = roomId
+                    };
+                    context.Chats.Add(chat);
+                }
+                context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        private bool createNewRoom(string roomName, string username, string usersString)
+        {
+            List<string> users = convertStringToList(usersString);
+            var room = context.Chatrooms.Where(x => x.RoomName == roomName).FirstOrDefault();
+            if (room != null) return false;
+            Chatroom chatroom = new Chatroom()
+            {
+                RoomName = roomName,
+                CheckCreate = "Create",
+                Time = DateTime.Now
+            };
+            context.Chatrooms.Add(chatroom);
+            context.SaveChanges();
+            if (addUserToChatroom(roomName, username, users) == false) return false;
+            return true;
+        }
+
         private string covertTempMessageToString(List<TempMessage> messages)
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -358,10 +432,18 @@ namespace ServerChatsApp
             }
         }
 
+        private bool checkUser(string name)
+        {
+            var user = context.Users.Where(x => x.Fullname == name).FirstOrDefault();
+            return (user == null) ? false : true;
+        }
+
         private string GetRoomName(string fromUser, string toUser)
         {
+            var room = context.Chatrooms.Where(x => x.RoomName == toUser).FirstOrDefault();
+            if (room != null) return toUser;
             string roomName = fromUser + toUser;
-            var room = context.Chatrooms.Where(x => x.RoomName == roomName).FirstOrDefault();
+            room = context.Chatrooms.Where(x => x.RoomName == roomName).FirstOrDefault();
             if (room != null) return roomName;
             roomName = toUser + fromUser;
             room = context.Chatrooms.Where(x => x.RoomName == roomName).FirstOrDefault();
@@ -488,10 +570,15 @@ namespace ServerChatsApp
         private string getAllUser()
         {
             Dictionary<string, string> dictUsers = new Dictionary<string, string>();
+            var chatrooms = context.Chatrooms.Where(x => x.CheckCreate == "Create");
             var users = context.Users;
             foreach (var user in users)
             {
                 dictUsers.Add(user.Fullname, user.Username);
+            }
+            foreach (var chatroom in chatrooms)
+            {
+                dictUsers.Add(chatroom.RoomName, "room");
             }
             string allUser = string.Join(";", dictUsers.Select(x => x.Key + "=" + x.Value).ToArray());
             return allUser;
@@ -614,6 +701,11 @@ namespace ServerChatsApp
             {
                 btnStart_Click(sender, e);
             }
+        }
+
+        private void txtIPServer_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

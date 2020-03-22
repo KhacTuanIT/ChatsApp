@@ -83,9 +83,11 @@
             // 
             // txtLog
             // 
+            this.txtLog.Enabled = false;
             this.txtLog.Location = new System.Drawing.Point(10, 60);
             this.txtLog.Multiline = true;
             this.txtLog.Name = "txtLog";
+            this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtLog.Size = new System.Drawing.Size(821, 521);
             this.txtLog.TabIndex = 3;
             // 
@@ -102,8 +104,9 @@
             this.txtIPServer.SelectionStart = 0;
             this.txtIPServer.Size = new System.Drawing.Size(257, 28);
             this.txtIPServer.TabIndex = 4;
-            this.txtIPServer.Text = "192.168.1.6";
+            this.txtIPServer.Text = "192.168.1.4";
             this.txtIPServer.UseSystemPasswordChar = false;
+            this.txtIPServer.Click += new System.EventHandler(this.txtIPServer_Click);
             // 
             // frmServer
             // 

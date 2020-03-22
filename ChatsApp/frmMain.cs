@@ -35,6 +35,8 @@ namespace ChatsApp
         private int dock = 0;
         private bool loadBox = false;
 
+        private Dictionary<string, string> usersDict = null;
+
         private chatbox box = null;
         public delegate void AddButton(string fullname);
         public AddButton myDelegate;
@@ -54,6 +56,7 @@ namespace ChatsApp
             this.username = username;
             this.fullname = fullname;
             this.lblNameUser.Text = fullname;
+            this.label1.Text = "ChatsApp - " + fullname;
             myDelegate = new AddButton(AddButtonMethod);
             reFreshPanel = new RefreshPanelAside(RefreshPanelAsideMethod);
         }
@@ -190,6 +193,7 @@ namespace ChatsApp
                         {
                             string allUser = chatData.Payload.Data;
                             Dictionary<string, string> dictUsers = getAllUser(allUser);
+                            usersDict = dictUsers;
                             invokeButton(_main, dictUsers);
                         }
                         if (chatData.Header.Header == Header.Message)
@@ -493,6 +497,24 @@ namespace ChatsApp
         private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
         {
 
+        }
+
+        private void tsmiCreateRoom_Click(object sender, EventArgs e)
+        {
+            List<string> users = new List<string>();
+            foreach (KeyValuePair<string, string> pair in usersDict) 
+            {
+                users.Add(pair.Key);
+            }
+            using (frmCreateRoom frm = new frmCreateRoom(chatClient, fullname, username, users))
+            {
+                frm.ShowDialog();
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            cmsChat.Show(Cursor.Position);
         }
     }
 }

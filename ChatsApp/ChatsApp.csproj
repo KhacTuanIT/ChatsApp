@@ -79,6 +79,12 @@
     <Compile Include="frmConfigSettings.Designer.cs">
       <DependentUpon>frmConfigSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmCreateRoom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCreateRoom.Designer.cs">
+      <DependentUpon>frmCreateRoom.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,6 +137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmConfigSettings.resx">
       <DependentUpon>frmConfigSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCreateRoom.resx">
+      <DependentUpon>frmCreateRoom.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>

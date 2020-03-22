@@ -49,6 +49,8 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.panelChatbox = new System.Windows.Forms.Panel();
             this.chatbox1 = new ChatsApp.chatbox();
+            this.cmsChat = new MaterialSkin.Controls.MaterialContextMenuStrip();
+            this.tsmiCreateRoom = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.cmsSetting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -58,6 +60,7 @@
             this.panelAside.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panelChatbox.SuspendLayout();
+            this.cmsChat.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -79,6 +82,7 @@
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // cmsSetting
             // 
@@ -234,6 +238,23 @@
             resources.ApplyResources(this.chatbox1, "chatbox1");
             this.chatbox1.Name = "chatbox1";
             // 
+            // cmsChat
+            // 
+            this.cmsChat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cmsChat.Depth = 0;
+            this.cmsChat.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsChat.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiCreateRoom});
+            this.cmsChat.MouseState = MaterialSkin.MouseState.HOVER;
+            this.cmsChat.Name = "cmsChat";
+            resources.ApplyResources(this.cmsChat, "cmsChat");
+            // 
+            // tsmiCreateRoom
+            // 
+            this.tsmiCreateRoom.Name = "tsmiCreateRoom";
+            resources.ApplyResources(this.tsmiCreateRoom, "tsmiCreateRoom");
+            this.tsmiCreateRoom.Click += new System.EventHandler(this.tsmiCreateRoom_Click);
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -262,6 +283,7 @@
             this.panelAside.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panelChatbox.ResumeLayout(false);
+            this.cmsChat.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -288,6 +310,8 @@
         private MaterialSkin.Controls.MaterialContextMenuStrip cmsSetting;
         private System.Windows.Forms.ToolStripMenuItem tmsiDeleteMessage;
         private chatbox chatbox1;
+        private MaterialSkin.Controls.MaterialContextMenuStrip cmsChat;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCreateRoom;
     }
 }
 

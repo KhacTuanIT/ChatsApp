@@ -46,7 +46,7 @@ namespace ChatObject
 
     public enum Header
     {
-        Side, Message, Join, Quit, Download, Upload, Register, Login, Logout, Forget, Refresh, LoadMessage, GetRoomName
+        Side, Message, Join, Quit, Download, Upload, Register, Login, Logout, Forget, Refresh, LoadMessage, GetRoomName, CreateRoom
     }
 
     public enum ChatTypeMess
@@ -62,7 +62,7 @@ namespace ChatObject
         CheckTrue,
         MissField,
         MissUsername,
-
+        CreateFail
     }
 
     public class TempMessage
