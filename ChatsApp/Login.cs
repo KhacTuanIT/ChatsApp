@@ -43,8 +43,6 @@ namespace ChatsApp
         {
             this.hostAddress = ConfigurationManager.AppSettings["hostAddress"];
             this.iPort = Int32.Parse(ConfigurationManager.AppSettings["iPort"]);
-            //this.hostAddress = "127.0.0.1";
-            //this.iPort = 9002;
         }
 
         public void connect(string hostAddress, int iPort)
@@ -137,6 +135,23 @@ namespace ChatsApp
 
         private void linkRegister_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            if (isConnect)
+            {
+                ChatHeaderObject header = new ChatHeaderObject()
+                {
+                    Header = Header.Quit,
+                    SessionFrom = this.user
+                };
+                ChatPayloadObject payload = new ChatPayloadObject()
+                {
+                };
+                ChatDataObject chatData = new ChatDataObject()
+                {
+                    Header = header,
+                    Payload = payload
+                };
+                this.chatClient.sendDataObject(chatData);
+            }
             Register register = new Register(this._frmLogin, this.user);
             register.Location = this.Location;
             register.Width = this.Width;
@@ -169,11 +184,6 @@ namespace ChatsApp
             }
             else
             {
-                //ThreadStart threadStart = new ThreadStart(runRecvData);
-                //Thread thread = new Thread(threadStart);
-
-                //thread.IsBackground = true;
-                //thread.Start();
                 checkLogin(username, password);
                 if (chatClient != null)
                 {

@@ -83,7 +83,6 @@
             // 
             // txtLog
             // 
-            this.txtLog.Enabled = false;
             this.txtLog.Location = new System.Drawing.Point(10, 60);
             this.txtLog.Multiline = true;
             this.txtLog.Name = "txtLog";

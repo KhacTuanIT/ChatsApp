@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtEmail = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.lblWarning = new System.Windows.Forms.Label();
             this.btnRegister = new System.Windows.Forms.Button();
             this.txtFullname = new MaterialSkin.Controls.MaterialSingleLineTextField();
@@ -36,7 +37,6 @@
             this.txtPassword = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.txtUsername = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtEmail = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +56,25 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(349, 501);
             this.panel1.TabIndex = 7;
+            // 
+            // txtEmail
+            // 
+            this.txtEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtEmail.Depth = 0;
+            this.txtEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEmail.Hint = "Email";
+            this.txtEmail.Location = new System.Drawing.Point(53, 181);
+            this.txtEmail.MouseState = MaterialSkin.MouseState.HOVER;
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.PasswordChar = '\0';
+            this.txtEmail.SelectedText = "";
+            this.txtEmail.SelectionLength = 0;
+            this.txtEmail.SelectionStart = 0;
+            this.txtEmail.Size = new System.Drawing.Size(247, 28);
+            this.txtEmail.TabIndex = 2;
+            this.txtEmail.UseSystemPasswordChar = false;
+            this.txtEmail.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtEmail_KeyDown);
             // 
             // lblWarning
             // 
@@ -81,7 +100,7 @@
             this.btnRegister.Location = new System.Drawing.Point(93, 353);
             this.btnRegister.Name = "btnRegister";
             this.btnRegister.Size = new System.Drawing.Size(159, 52);
-            this.btnRegister.TabIndex = 4;
+            this.btnRegister.TabIndex = 5;
             this.btnRegister.Text = "Đăng ký";
             this.btnRegister.UseVisualStyleBackColor = true;
             this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
@@ -115,7 +134,7 @@
             this.linkRegister.Location = new System.Drawing.Point(2, 427);
             this.linkRegister.Name = "linkRegister";
             this.linkRegister.Size = new System.Drawing.Size(343, 23);
-            this.linkRegister.TabIndex = 15;
+            this.linkRegister.TabIndex = 6;
             this.linkRegister.TabStop = true;
             this.linkRegister.Text = "Bạn đã có tài khoản? Đăng nhập ngay!";
             this.linkRegister.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -136,7 +155,7 @@
             this.txtPassword.SelectionLength = 0;
             this.txtPassword.SelectionStart = 0;
             this.txtPassword.Size = new System.Drawing.Size(247, 28);
-            this.txtPassword.TabIndex = 3;
+            this.txtPassword.TabIndex = 4;
             this.txtPassword.UseSystemPasswordChar = false;
             this.txtPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassword_KeyDown);
             // 
@@ -155,7 +174,7 @@
             this.txtUsername.SelectionLength = 0;
             this.txtUsername.SelectionStart = 0;
             this.txtUsername.Size = new System.Drawing.Size(247, 28);
-            this.txtUsername.TabIndex = 2;
+            this.txtUsername.TabIndex = 3;
             this.txtUsername.UseSystemPasswordChar = false;
             this.txtUsername.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtUsername_KeyDown);
             // 
@@ -171,24 +190,6 @@
             this.label1.TabIndex = 11;
             this.label1.Text = "Đăng ký";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // txtEmail
-            // 
-            this.txtEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtEmail.Depth = 0;
-            this.txtEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEmail.Hint = "Email";
-            this.txtEmail.Location = new System.Drawing.Point(53, 181);
-            this.txtEmail.MouseState = MaterialSkin.MouseState.HOVER;
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.PasswordChar = '*';
-            this.txtEmail.SelectedText = "";
-            this.txtEmail.SelectionLength = 0;
-            this.txtEmail.SelectionStart = 0;
-            this.txtEmail.Size = new System.Drawing.Size(247, 28);
-            this.txtEmail.TabIndex = 19;
-            this.txtEmail.UseSystemPasswordChar = false;
             // 
             // Register
             // 

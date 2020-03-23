@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -235,7 +236,7 @@ namespace ServerChatsApp
                             if (chatData.Header.ChatType == ChatTypeMess.Message)
                             {
                                 int id = getUserId(chatData.Header.SessionFrom);
-
+                                data = DateTime.Now + ":Session from " + chatData.Header.SessionFrom + " username: " + chatData.Payload.Username + ": message to " + chatData.Header.SessionTo;
                                 if (id > 0)
                                 {
                                     Model.Message message = new Model.Message()
@@ -255,7 +256,7 @@ namespace ServerChatsApp
                         {
                             channel = (SocketChannel)this.mhSessionTable[chatData.Header.SessionFrom];
                             List<TempMessage> messages = GetTempMessages(chatData.Header.SessionTo);
-
+                            data = DateTime.Now + ":Session from " + chatData.Header.SessionFrom + " username: " + chatData.Payload.Username + " load message!";
                             chatData.Payload.Data = covertTempMessageToString(messages);
                         }
                         else if (chatData.Header.Header == Header.Quit)
@@ -284,6 +285,7 @@ namespace ServerChatsApp
                         }
                         else if (chatData.Header.Header == Header.CreateRoom)
                         {
+                            data = DateTime.Now + ":Session from " + chatData.Header.SessionFrom + " create chat room " + chatData.Payload.ChatroomName;
                             channel = (SocketChannel)this.mhSessionTable[chatData.Header.SessionFrom];
                             if (createNewRoom(chatData.Payload.ChatroomName, chatData.Header.SessionFrom, chatData.Payload.Data))
                             {
@@ -296,9 +298,9 @@ namespace ServerChatsApp
                         }
                         if (isQuit)
                         {
-                            this.mhSessionTable.Remove(chatData.Header.SessionFrom);
                             isQuit = false;
                             channel.stopChannel();
+                            this.mhSessionTable.Remove(chatData.Header.SessionFrom);
                         }
                         if (messageChat)
                         { 
@@ -331,8 +333,8 @@ namespace ServerChatsApp
                         {
                             if (username != "")
                             {
-                                this.mhSessionTable.Remove(username);
-                                channel.stopChannel();
+                                channel.sendData(chatData);
+                                System.Threading.Thread.Sleep(300);
                             }
                         }
                     }
@@ -616,6 +618,7 @@ namespace ServerChatsApp
         /// <param name="password"></param>
         private void addUser(string fullname, string username, string email, string password)
         {
+            password = HasherPassword(password);
             User user = new User()
             {
                 Username = username,
@@ -677,6 +680,14 @@ namespace ServerChatsApp
             return result;
         }
 
+        private string HasherPassword(string password)
+        {
+            var sha256 = new SHA256CryptoServiceProvider();
+            var sha256data = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            var hash = BitConverter.ToString(sha256data).Replace("-", "").ToLower();
+            return hash.ToString();
+        }
+
         /// <summary>
         /// Check password for username.
         /// </summary>
@@ -686,6 +697,7 @@ namespace ServerChatsApp
         private bool checkPassword(string username, string password)
         {
             var user = context.Users.Where(x => x.Username == username).FirstOrDefault();
+            password = HasherPassword(password);
             if (password.Equals(user.Password)) return true;
             return false;
         }

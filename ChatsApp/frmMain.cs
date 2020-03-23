@@ -516,5 +516,34 @@ namespace ChatsApp
         {
             cmsChat.Show(Cursor.Position);
         }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (this.chatClient != null)
+            {
+                try
+                {
+                    ChatHeaderObject header = new ChatHeaderObject()
+                    {
+                        Header = Header.Quit,
+                        SessionFrom = this.username
+                    };
+                    ChatPayloadObject payload = new ChatPayloadObject()
+                    {
+
+                    };
+                    ChatDataObject chatData = new ChatDataObject()
+                    {
+                        Header = header,
+                        Payload = payload
+                    };
+                    this.chatClient.sendDataObject(chatData);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
     }
 }

@@ -112,7 +112,7 @@ namespace ChatsApp
                         Header = Header.Message,
                         SessionFrom = this.username,
                         SessionTo = this.roomName,
-                        ChatType = ChatObject.ChatTypeMess.Message
+                        ChatType = type
                     };
                     ChatPayloadObject payload = new ChatPayloadObject()
                     {
