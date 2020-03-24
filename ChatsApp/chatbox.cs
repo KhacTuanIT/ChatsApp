@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ServerChatsApp.Model;
 using ChatObject;
+using System.IO;
 
 namespace ChatsApp
 {
@@ -132,7 +133,41 @@ namespace ChatsApp
             }
             else if (type == ChatObject.ChatTypeMess.File)
             {
-
+                MessageBox.Show("Chức năng đang phát triển!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //try
+                //{
+                //    byte[] dataFile = File.ReadAllBytes(txtMessage.Text.Trim());
+                //    string dataTranfer = Convert.ToBase64String(dataFile);
+                //    string filePath = txtMessage.Text.Trim();
+                //    string[] temp = filePath.Split('\\');
+                //    string filename = temp[temp.Length - 1];
+                //    sendFile(this.fullname, filename, DateTime.Now.ToShortTimeString());
+                //    ChatHeaderObject header = new ChatHeaderObject()
+                //    {
+                //        Header = Header.Upload,
+                //        SessionFrom = this.username,
+                //        SessionTo = this.roomName,
+                //        ChatType = type
+                //    };
+                //    ChatPayloadObject payload = new ChatPayloadObject()
+                //    {
+                //        MessageType = this.messageType,
+                //        Data = dataTranfer,
+                //        Time = DateTime.Now,
+                //        Filename = filename
+                //    };
+                //    ChatDataObject chatData = new ChatDataObject()
+                //    {
+                //        Header = header,
+                //        Payload = payload
+                //    };
+                //    this.chatClient.sendDataObject(chatData);
+                //    txtMessage.Text = "";
+                //} 
+                //catch (Exception)
+                //{
+                //    MessageBox.Show("Đường dẫn file sai", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //}
             }
         }
 
@@ -199,7 +234,7 @@ namespace ChatsApp
 
         public void sendMessage(string name, string message, string time)
         {
-            buble buble = new ChatsApp.buble(name, message, time, MessageType.Out);
+            buble buble = new ChatsApp.buble(name, message, time, MessageType.Out, this.chatClient);
             buble.Location = buble2.Location;
             buble.Size = buble2.Size;
             buble.Anchor = buble2.Anchor;
@@ -214,7 +249,7 @@ namespace ChatsApp
 
         public void receiveMessage(string name, string message, string time)
         {
-            buble buble = new ChatsApp.buble(name, message, time, MessageType.In);
+            buble buble = new ChatsApp.buble(name, message, time, MessageType.In, this.chatClient);
             buble.Location = buble1.Location;
             buble.Size = buble1.Size;
             buble.Anchor = buble1.Anchor;
@@ -229,7 +264,7 @@ namespace ChatsApp
 
         public void sendFile(string name, string title, string time)
         {
-            buble buble = new ChatsApp.buble(name, title, time, MessageType.OutFile);
+            buble buble = new ChatsApp.buble(name, title, time, MessageType.OutFile, this.chatClient);
             buble.Location = buble2.Location;
             buble.Size = buble2.Size;
             buble.Anchor = buble2.Anchor;
@@ -244,7 +279,7 @@ namespace ChatsApp
 
         public void receiveFile(string name, string title, string time)
         {
-            buble buble = new ChatsApp.buble(name, title, time, MessageType.InFile);
+            buble buble = new ChatsApp.buble(name, title, time, MessageType.InFile, this.chatClient);
             buble.Location = buble1.Location;
             buble.Size = buble1.Size;
             buble.Anchor = buble1.Anchor;
@@ -269,6 +304,27 @@ namespace ChatsApp
         private void button1_Click(object sender, EventArgs e)
         {
             type = ChatObject.ChatTypeMess.File;
+            OpenFileDialog openFileDialog1 = new OpenFileDialog
+            {
+                InitialDirectory = @"C:\",
+                Title = "Browse Text Files",
+
+                CheckFileExists = true,
+                CheckPathExists = true,
+
+                DefaultExt = "txt",
+                Filter = "txt files (*.txt)|*.txt",
+                FilterIndex = 2,
+                RestoreDirectory = true,
+
+                ReadOnlyChecked = true,
+                ShowReadOnly = true
+            };
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtMessage.Text = openFileDialog1.FileName;
+            }
         }
     }
 }

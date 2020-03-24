@@ -98,14 +98,15 @@
             this.tsmiDownload});
             this.cmsDownload.MouseState = MaterialSkin.MouseState.HOVER;
             this.cmsDownload.Name = "materialContextMenuStrip1";
-            this.cmsDownload.Size = new System.Drawing.Size(148, 30);
+            this.cmsDownload.Size = new System.Drawing.Size(215, 58);
             // 
             // tsmiDownload
             // 
             this.tsmiDownload.Image = global::ChatsApp.Properties.Resources.icons8_download_100;
             this.tsmiDownload.Name = "tsmiDownload";
-            this.tsmiDownload.Size = new System.Drawing.Size(147, 26);
+            this.tsmiDownload.Size = new System.Drawing.Size(214, 26);
             this.tsmiDownload.Text = "Tải xuống";
+            this.tsmiDownload.Click += new System.EventHandler(this.tsmiDownload_Click);
             // 
             // buble
             // 

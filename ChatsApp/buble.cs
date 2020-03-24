@@ -12,17 +12,19 @@ namespace ChatsApp
 {
     public partial class buble : UserControl
     {
+        private ChatClientControl chatClient = null;
         public buble()
         {
                 InitializeComponent();
         }
 
-        public buble(string name, string message, string time, MessageType messageType)
+        public buble(string name, string message, string time, MessageType messageType, ChatClientControl chatClient)
         {
             InitializeComponent();
             lblUser.Text = name;
             lblMessage.Text = message;
             lblTime.Text = time;
+            this.chatClient = chatClient;
 
             if (messageType.ToString() == "Out")
             {
@@ -81,6 +83,15 @@ namespace ChatsApp
         private void panelBubble_Resize(object sender, EventArgs e)
         {
             SetHeight();
+        }
+
+        private void tsmiDownload_Click(object sender, EventArgs e)
+        {
+            string filename = (sender as Label).Text;
+            if (filename != "")
+            {
+
+            }
         }
     }
 

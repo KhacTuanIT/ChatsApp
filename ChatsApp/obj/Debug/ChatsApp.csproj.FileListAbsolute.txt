@@ -11,7 +11,6 @@ E:\NetworkProgramming\App\v7\ChatsApp\ChatsApp\bin\Debug\ChatObject.dll.config
 E:\NetworkProgramming\App\v7\ChatsApp\ChatsApp\bin\Debug\EntityFramework.xml
 E:\NetworkProgramming\App\v7\ChatsApp\ChatsApp\bin\Debug\EntityFramework.SqlServer.xml
 E:\NetworkProgramming\App\v7\ChatsApp\ChatsApp\bin\Debug\Newtonsoft.Json.xml
-E:\NetworkProgramming\App\v7\ChatsApp\ChatsApp\obj\Debug\ChatsApp.csprojAssemblyReference.cache
 E:\NetworkProgramming\App\v7\ChatsApp\ChatsApp\obj\Debug\ChatsApp.buble.resources
 E:\NetworkProgramming\App\v7\ChatsApp\ChatsApp\obj\Debug\ChatsApp.chatbox.resources
 E:\NetworkProgramming\App\v7\ChatsApp\ChatsApp\obj\Debug\ChatsApp.frmConfigSettings.resources

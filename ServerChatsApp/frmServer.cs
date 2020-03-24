@@ -150,12 +150,23 @@ namespace ServerChatsApp
                         else channel = (SocketChannel)this.mhSessionTable[chatData.Header.SessionTo];
                         if (chatData.Header.Header == Header.Download)
                         {
+                            
                             channel = (SocketChannel)this.mhSessionTable[chatData.Header.SessionFrom];
                             string fileName = chatData.Payload.Filename;
-                            byte[] dataFile = File.ReadAllBytes(appFolder + "\\" + fileName);
-                            string dataTranfer = Convert.ToBase64String(dataFile);
+                            string dataTranfer = "";
+                            try
+                            {
+                                byte[] dataFile = File.ReadAllBytes(appFolder + "\\" + fileName);
+                                dataTranfer = Convert.ToBase64String(dataFile); 
+                                data = DateTime.Now + ":Session from " + chatData.Header.SessionFrom + " download file " + fileName;
+                            }
+                            catch (Exception)
+                            {
+                                data = DateTime.Now + ":Session from " + chatData.Header.SessionFrom + " download file " + fileName + " - filename wrong!";
+                            }
+                            
                             chatData.Payload.Data = dataTranfer;
-                            data = DateTime.Now + ":Session from " + chatData.Header.SessionFrom + " download file " + fileName;
+                            
                         }
                         else if (chatData.Header.Header == Header.Upload)
                         {
@@ -164,7 +175,21 @@ namespace ServerChatsApp
                             int messageTypeId = int.Parse(chatData.Payload.MessageType);
                             byte[] dataFile = Convert.FromBase64String(chatData.Payload.Data);
                             File.WriteAllBytes(appFolder + "\\" + fileName , dataFile);
-                            uploadFile(chatId, messageTypeId, fileName);
+
+                            int id = getUserId(chatData.Header.SessionFrom);
+                            if (id > 0)
+                            {
+                                Model.Message message = new Model.Message()
+                                {
+                                    ChatroomName = chatData.Header.SessionTo,
+                                    Content = chatData.Payload.Filename,
+                                    UserId = id,
+                                    Time = DateTime.Now
+                                };
+                                addMessageToDB(message);
+                            }
+                            messageChat = true;
+                            userInRooms = getUserInRooms(chatData.Header.SessionTo, chatData.Header.SessionFrom);
                             data = DateTime.Now + ":Session from " + chatData.Header.SessionFrom + " upload file " + fileName;
                         }
                         else if(chatData.Header.Header == Header.Register)
@@ -269,7 +294,7 @@ namespace ServerChatsApp
                         else if (chatData.Header.Header == Header.Refresh)
                         {
                             channel = (SocketChannel)this.mhSessionTable[chatData.Header.SessionFrom];
-                            string allUser = getAllUser();
+                            string allUser = getAllUser(chatData.Header.SessionFrom);
                             chatData.Payload.Data = allUser;
                             data = DateTime.Now + ":Session from " + chatData.Header.SessionFrom + " get all user!";
                         }
@@ -569,10 +594,13 @@ namespace ServerChatsApp
             return null;
         }
 
-        private string getAllUser()
+        private string getAllUser(string username)
         {
+            List<Chatroom> chatroomList = new List<Chatroom>();
             Dictionary<string, string> dictUsers = new Dictionary<string, string>();
             var chatrooms = context.Chatrooms.Where(x => x.CheckCreate == "Create");
+            int userId = context.Users.Where(x => x.Username == username).FirstOrDefault().Id;
+            
             var users = context.Users;
             foreach (var user in users)
             {
@@ -580,27 +608,15 @@ namespace ServerChatsApp
             }
             foreach (var chatroom in chatrooms)
             {
-                dictUsers.Add(chatroom.RoomName, "room");
+                var chat = context.Chats.Where(x => x.ChatRoomId == chatroom.Id).Where(x => x.UserId == userId).FirstOrDefault();
+                if (chat != null) dictUsers.Add(chatroom.RoomName, "room");
             }
+
+
             string allUser = string.Join(";", dictUsers.Select(x => x.Key + "=" + x.Value).ToArray());
             return allUser;
         }
 
-        /// <summary>
-        /// Save file from user to system.
-        /// </summary>
-        /// <param name="chatId"></param>
-        /// <param name="messageTypeId"></param>
-        /// <param name="filename"></param>
-        private void uploadFile(int chatId, int messageTypeId, string filename)
-        {
-            Model.Message message = new Model.Message();
-            message.Content = filename;
-            message.ChatType = ChatTypeMess.File;
-            message.Time = DateTime.Now;
-            context.Messages.Add(message);
-            context.SaveChanges();
-        }
 
         public User getUser(string username)
         {
